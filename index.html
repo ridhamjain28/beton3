@@ -14,99 +14,32 @@
     <!-- Styles -->
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="spa">
+<body>
 
     <!-- Navigation -->
     <header class="site-header">
         <div class="container">
-            <a href="index.html" class="brand-logo" id="logo">BETON</a>
-            
-            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            
-            <nav class="main-nav">
+            <a href="index.html" class="brand-logo">BETON</a>
+            <nav class="site-nav">
                 <ul>
-                    <li><a href="index.html" id="philosophy-link" class="active">PHILOSOPHY</a></li>
-                    <li><a href="products.html" id="products-link">PRODUCTS</a></li>
-                    <li><a href="specifications.html">SPECIFICATIONS</a></li>
-                    <li><a href="support.html">CONTACT</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="philosophy.html">Philosophy</a></li>
+                    <li><a href="specifications.html">Specifications</a></li>
+                    <li><a href="support.html">Support</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- STATE A: PHILOSOPHY (Current State) -->
-    <section id="state-a" class="state philosophy-state">
+    <!-- Hero Section -->
+    <section class="hero">
         <div class="container">
-            <div class="philosophy-content">
-                <div class="hero-container">
-                    <h1 class="hero-text">Silence. Permanence. Light.</h1>
-                    <div class="manifesto">
-                        <p>We do not decorate. We engineer. Our process begins with raw aluminum and ends with pure light. Every fixture is machined, tested, and calibrated for visual silence. Based in India, engineered for the world.</p>
-                    </div>
-                    <a href="#" class="cta-button" id="explore-systems">Explore Systems →</a>
-                </div>
-            </div>
+            <span class="overline">Series 01</span>
+            <h1>Engineered lighting systems for<br>interior environments.</h1>
+            <p class="hero-sub">Beton develops indoor lighting fixtures with controlled optics, stable colour performance, and predictable behaviour over time.</p>
+            <a href="specifications.html" class="btn btn-primary">View Specifications</a>
         </div>
     </section>
-
-    <!-- STATE B: PRODUCTS (Target State) -->
-    <section id="state-b" class="state product-state">
-        <div class="container">
-            <div class="section-header">
-                <h2>Product Systems</h2>
-                <p>A focused range of indoor lighting systems designed for consistent performance, visual comfort, and clear specification.</p>
-            </div>
-            <div id="technicalGrid" class="technical-grid">
-                <!-- Products injected via JS -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Expanded View Modal -->
-    <div id="expandedView" class="expanded-view">
-        <div class="expanded-content">
-            <button id="closeBtn" class="close-btn" aria-label="Close">×</button>
-            
-            <div class="image-container">
-                <img src="assets/images/1 off.webp" alt="Product" class="flip-image background-img" id="bgImg">
-                <img src="assets/images/1 on.webp" alt="Product Lit" id="litImg" class="flip-image lit-img">
-            </div>
-            
-            <div class="product-details">
-                <h3 id="expandedTitle"></h3>
-                <p id="expandedCategory" class="category"></p>
-                <p id="expandedPrice" class="price"></p>
-                <p id="expandedDesc"></p>
-                
-                <!-- Color Temperature Controls -->
-                <div class="color-controls">
-                    <button class="color-btn active" data-temp="3000K">3000K</button>
-                    <button class="color-btn" data-temp="4000K">4000K</button>
-                    <button class="color-btn" data-temp="6000K">6000K</button>
-                </div>
-                
-                <div class="specs-features">
-                    <div class="specs-section">
-                        <h4>Specifications</h4>
-                        <table id="specsTable" class="specs-table">
-                            <!-- Specs injected via JS -->
-                        </table>
-                    </div>
-                    
-                    <div class="features-section">
-                        <h4>Features</h4>
-                        <ul id="featuresList">
-                            <!-- Features injected via JS -->
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Footer -->
     <footer class="site-footer">
@@ -133,8 +66,5 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
-    <script src="assets/js/products.js"></script>
-    <script src="assets/js/main.js"></script>
 </body>
 </html>
