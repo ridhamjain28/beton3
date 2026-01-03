@@ -152,7 +152,7 @@ p {
 }
 
 .brand-logo .logo-img {
-    height: 75px;
+    height: 65px;
     width: auto;
     object-fit: contain;
     display: block;
@@ -404,6 +404,53 @@ p {
     transition: all 0.3s ease;
 }
 
+/* ============================================
+   TABLET RESPONSIVE (769px - 1024px)
+   ============================================ */
+@media (max-width: 1024px) and (min-width: 769px) {
+    /* Header: Reduce padding */
+    .site-header {
+        padding: 20px 0;
+    }
+    
+    /* Container: Tighter margins */
+    .container {
+        padding: 0 24px;
+    }
+    
+    /* Product Grid: 2 columns instead of 3 */
+    .technical-grid,
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+    
+    /* Typography: Slightly smaller */
+    h1 {
+        font-size: 2.8rem;
+    }
+    
+    h2 {
+        font-size: 1.75rem;
+    }
+    
+    /* Spec Grid: 2 columns */
+    .spec-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Nav toggle hidden on tablet */
+    .nav-toggle {
+        display: none;
+    }
+    
+    /* Nav links slightly smaller */
+    .main-nav a {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+}
+
 @media (max-width: 768px) {
     .nav-toggle {
         display: flex;
@@ -512,6 +559,71 @@ p {
     .spec-media {
         justify-self: start;
         max-width: 520px;
+    }
+}
+
+/* Spec Grid Mobile Enhancements */
+@media (max-width: 768px) {
+    .spec-grid {
+        gap: 40px;
+    }
+    
+    .spec-item {
+        gap: 16px;
+    }
+    
+    .spec-item h3 {
+        font-size: 1rem;
+    }
+    
+    .spec-item p {
+        font-size: 0.9rem;
+    }
+    
+    .spec-media {
+        max-width: 100%;
+    }
+    
+    .spec-diagram {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+/* Spec Grid Small Mobile */
+@media (max-width: 480px) {
+    .spec-grid {
+        gap: 32px;
+    }
+    
+    .spec-item {
+        padding: 0;
+        gap: 12px;
+    }
+    
+    .spec-item h3 {
+        font-size: 0.95rem;
+    }
+    
+    .spec-item p {
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+    
+    .spec-diagram {
+        border-radius: 4px;
+    }
+    
+    .section-header {
+        margin-bottom: 24px !important;
+    }
+    
+    .section-header h2 {
+        font-size: 1.25rem;
+    }
+    
+    .section-header p {
+        font-size: 0.85rem;
     }
 }
 
@@ -981,5 +1093,119 @@ body.home-page .action-btn:hover {
     body.home-page .about-content p {
         font-size: 15px;
         line-height: 1.7;
+    }
+}
+
+/* ============================================
+   SMALL MOBILE RESPONSIVE (max-width: 480px)
+   Extra compact for small phones
+   ============================================ */
+@media (max-width: 480px) {
+    /* Tighter body padding */
+    body {
+        padding-top: 70px !important;
+    }
+    
+    /* Home page exception */
+    body.home-page {
+        padding-top: 0 !important;
+    }
+    
+    /* Smaller header */
+    .site-header {
+        padding: 8px 0;
+    }
+    
+    .logo-img {
+        height: 40px;
+        width: auto;
+    }
+    
+    /* Full-bleed containers */
+    .container {
+        padding: 0 16px !important;
+    }
+    
+    /* Smaller typography */
+    h1 {
+        font-size: 1.75rem !important;
+        line-height: 1.2;
+    }
+    
+    h2 {
+        font-size: 1.25rem !important;
+    }
+    
+    h3 {
+        font-size: 1.1rem !important;
+    }
+    
+    .hero-text {
+        font-size: 1.75rem !important;
+        padding: 0 16px;
+    }
+    
+    body, p {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+    
+    /* Compact buttons */
+    .action-btn,
+    .btn,
+    .submit-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        min-height: 40px;
+    }
+    
+    /* Compact sections */
+    .about-section,
+    .products-section,
+    .section-products,
+    .contact-section {
+        padding: 30px 0 !important;
+    }
+    
+    /* Compact about content */
+    body.home-page .about-content {
+        padding: 20px 16px !important;
+    }
+    
+    body.home-page .about-content p {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+    
+    /* Smaller scroll indicator */
+    .scroll-indicator {
+        bottom: 20px;
+        right: 20px;
+        width: 28px;
+        height: 28px;
+    }
+    
+    /* Contact form compact */
+    .contact-form-wrapper {
+        padding: 20px !important;
+    }
+    
+    /* Modal full screen on small mobile */
+    .expanded-content {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100vh !important;
+        max-height: 100vh !important;
+        padding: 16px !important;
+        border-radius: 0 !important;
+        gap: 16px !important;
+    }
+    
+    .close-btn {
+        top: 8px;
+        right: 8px;
+        width: 36px;
+        height: 36px;
+        font-size: 24px;
     }
 }

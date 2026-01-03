@@ -1,5 +1,10 @@
 # Project Memory & Activity Log
 
+- **[2026-01-03 Session]:** Mobile CSS updated to match mockup - White header (#FFFFFF) with black icons/text, Light grey content (#CCCCCC).
+- **Files Modified:** `assets/css/style.css` (mobile media query updated)
+- **Git Remote:** Changed to `https://github.com/ridhamjain28/beton3.git` - all future pushes go here.
+- **Next Step:** Await further user instructions.
+
 ## [2026-01-03] Comprehensive QA Audit Fixes
 - **Summary:** Applied all fixes from the comprehensive QA audit report (17 issues identified, all critical and warning issues resolved).
 - **Files Modified:**

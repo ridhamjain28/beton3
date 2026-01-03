@@ -368,6 +368,103 @@
                 gap: 16px;
             }
         }
+        
+        /* TABLET: Modal single column */
+        @media (max-width: 1024px) {
+            .expanded-content {
+                grid-template-columns: 1fr;
+                max-height: 95vh;
+                overflow-y: auto;
+                padding: 32px;
+                gap: 24px;
+            }
+            
+            .image-container {
+                min-height: 300px;
+                max-height: 50vh;
+            }
+            
+            .product-details {
+                max-height: none;
+            }
+        }
+        
+        /* MOBILE: Full screen modal */
+        @media (max-width: 768px) {
+            .expanded-content {
+                width: 100% !important;
+                max-width: 100%;
+                height: 100vh;
+                max-height: 100vh;
+                padding: 20px !important;
+                border-radius: 0;
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .image-container {
+                min-height: 200px;
+                max-height: 40vh;
+            }
+            
+            .close-btn {
+                top: 12px;
+                right: 12px;
+            }
+            
+            .product-details h2 {
+                font-size: 1.5rem;
+            }
+            
+            .specs-table td {
+                padding: 8px 0;
+                font-size: 0.85rem;
+            }
+            
+            .features-section li {
+                font-size: 0.85rem;
+                padding: 6px 0;
+            }
+        }
+        
+        /* SMALL MOBILE: Extra compact modal */
+        @media (max-width: 480px) {
+            .expanded-content {
+                padding: 16px !important;
+                gap: 16px;
+            }
+            
+            .image-container {
+                min-height: 150px;
+                max-height: 35vh;
+            }
+            
+            .close-btn {
+                top: 8px;
+                right: 8px;
+                width: 32px;
+                height: 32px;
+                font-size: 24px;
+            }
+            
+            .product-details h2 {
+                font-size: 1.25rem;
+            }
+            
+            .product-details .price {
+                font-size: 1rem;
+            }
+            
+            .specs-features {
+                gap: 20px;
+            }
+            
+            .specs-section h4,
+            .features-section h4 {
+                font-size: 0.9rem;
+                margin-bottom: 12px;
+            }
+        }
     </style>
 </head>
 <body>

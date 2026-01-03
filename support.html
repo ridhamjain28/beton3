@@ -140,6 +140,71 @@
                 padding: 32px;
             }
         }
+        
+        /* MOBILE: Compact contact layout */
+        @media (max-width: 768px) {
+            .contact-layout {
+                gap: 32px;
+            }
+            
+            .contact-map {
+                height: 250px;
+            }
+            
+            .contact-form-wrapper {
+                padding: 24px;
+            }
+            
+            .contact-item h4 {
+                font-size: 0.8rem;
+            }
+            
+            .contact-item p {
+                font-size: 0.9rem;
+            }
+            
+            .form-group label {
+                font-size: 0.85rem;
+            }
+            
+            .form-group input,
+            .form-group textarea {
+                padding: 10px 14px;
+                font-size: 0.95rem;
+            }
+        }
+        
+        /* SMALL MOBILE: Extra compact contact */
+        @media (max-width: 480px) {
+            .contact-layout {
+                gap: 24px;
+            }
+            
+            .contact-form-wrapper {
+                padding: 16px;
+            }
+            
+            .contact-map {
+                height: 200px;
+            }
+            
+            .form-group {
+                margin-bottom: 16px;
+            }
+            
+            .form-group input,
+            .form-group textarea {
+                padding: 10px 12px;
+            }
+            
+            .submit-btn {
+                padding: 14px 24px;
+            }
+            
+            .contact-item {
+                margin-bottom: 16px;
+            }
+        }
     </style>
 </head>
 <body>
