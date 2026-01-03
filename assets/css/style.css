@@ -29,12 +29,13 @@
 }
 
 body {
-    background-color: var(--bg-primary);
+    background-color: #F2F2F2; /* Premium Light Concrete Grey */
     color: var(--text-primary);
     font-family: var(--font-family);
     font-size: var(--body-size);
     line-height: var(--line-height);
     -webkit-font-smoothing: antialiased;
+    padding-top: 100px; /* Prevent content from hiding behind fixed header */
 }
 
 a {
@@ -112,18 +113,35 @@ p {
 .site-header {
     padding: var(--spacing-md) 0;
     border-bottom: 1px solid transparent; /* Placeholder for scroll state */
+    position: fixed; /* Fixed to top of screen */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* High z-index to float above all content */
+    background-color: #FFFFFF; /* White card effect against grey background */
 }
 
 .site-header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
 .brand-logo {
     font-weight: 600;
     font-size: 1.2rem;
     letter-spacing: -0.03em;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.brand-logo .logo-img {
+    height: 75px;
+    width: auto;
+    object-fit: contain;
+    display: block;
 }
 
 .site-nav ul {
@@ -218,33 +236,206 @@ p {
     color: var(--text-secondary);
 }
 
-/* Philosophy */
-.section-philosophy {
+/* Hero Section */
+.hero-section {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-image: url('../../home.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.35);
+    z-index: 1;
+}
+
+.hero-content {
+    text-align: center;
+    position: relative;
+    width: 100%;
+    z-index: 2;
+}
+
+.hero-text {
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 1.1;
+    color: #FFFFFF;
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    margin-bottom: 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    color: #FFFFFF;
+    animation: bounce 2s infinite;
+    cursor: pointer;
+    z-index: 2;
+    transition: opacity 0.3s ease;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* About Section */
+.about-section {
     padding: var(--spacing-xl) 0;
-    background-color: #F0F0EE; /* Slightly darker for contrast */
+    background-color: var(--bg-primary);
+}
+
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.about-content p {
+    font-size: clamp(1rem, 1.5vw, 1.125rem);
+    line-height: 1.8;
+    color: #555555;
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.about-content p:last-of-type {
+    margin-bottom: 48px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    display: inline-block;
+    padding: 16px 40px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #1E1E1E;
+    border: 1px solid #1E1E1E;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    letter-spacing: 0.02em;
+    background: transparent;
+}
+
+.action-btn:hover {
+    background: #1E1E1E;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+/* Navigation Styles */
+.main-nav {
+    display: flex;
+}
+
+.main-nav ul {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+}
+
+.main-nav a {
+    font-size: 0.95rem;
+    color: #555555;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    color: #1E1E1E;
+}
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.nav-toggle span {
+    width: 24px;
+    height: 2px;
+    background: #1E1E1E;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: flex;
+    }
+    
+    .main-nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #FFFFFF;
+        border-top: 1px solid #E0E0E0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+    
+    .main-nav.active {
+        max-height: 500px;
+    }
+    
+    .main-nav ul {
+        flex-direction: column;
+        padding: 24px;
+        gap: 16px;
+    }
 }
 
 /* Specifications Grid */
 .spec-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 64px;
-    row-gap: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
     margin-top: 64px;
     margin-bottom: 120px;
 }
 
 .spec-item {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+    gap: 40px;
+    align-items: center;
 }
 
-.spec-item img {
-    width: 100%;
-    height: auto;
-    border: 1px solid #E0E0E0;
-    display: block;
+.spec-item.no-image {
+    grid-template-columns: 1fr;
 }
 
 .spec-item h3 {
@@ -260,6 +451,96 @@ p {
     line-height: 1.5;
     max-width: 55ch;
     margin-bottom: 0;
+}
+
+.spec-text {
+    min-width: 0;
+}
+
+.spec-item.no-image .spec-item p,
+.spec-item.no-image p {
+    max-width: 65ch;
+}
+
+.spec-media {
+    width: 100%;
+    max-width: 360px;
+    justify-self: end;
+}
+
+.spec-diagram {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #E0E0E0;
+    background: #FFFFFF;
+    object-fit: contain;
+}
+
+@media (max-width: 900px) {
+    .spec-item {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .spec-media {
+        justify-self: start;
+        max-width: 520px;
+    }
+}
+
+/* Toast Notification (Contact Form) */
+.toast-notification {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 3000;
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.toast-notification.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.toast-notification__content {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #111111;
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 12px 14px;
+    border-radius: 6px;
+    max-width: min(420px, calc(100vw - 48px));
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    font-size: 0.95rem;
+    line-height: 1.35;
+}
+
+.toast-notification__close {
+    margin-left: auto;
+    border: none;
+    background: transparent;
+    color: #FFFFFF;
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    line-height: 1;
+    font-size: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+    transition: opacity 0.15s ease;
+}
+
+.toast-notification__close:hover {
+    opacity: 1;
 }
 
 /* Footer */
@@ -356,4 +637,237 @@ p {
 
 .site-footer ul li {
     margin-bottom: 8px;
+}
+
+/* HOME PAGE SPECIFIC STYLES */
+body.home-page {
+    background-image: url('../../home.png');
+    background-attachment: fixed; /* Keeps image still while scrolling */
+    background-size: cover;
+    background-position: center;
+    background-color: #1a1a1a; /* Fallback color */
+    color: #ffffff; /* Make all text white for readability */
+    padding-top: 0; /* No padding needed - content should be behind transparent header */
+}
+
+/* Make containers transparent on Home Page so we see the image */
+body.home-page header,
+body.home-page nav,
+body.home-page section,
+body.home-page .hero,
+body.home-page .hero-section,
+body.home-page .about-section, 
+body.home-page footer {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+/* Remove hero section background image and overlay on home page */
+body.home-page .hero-section {
+    background-image: none !important;
+}
+
+body.home-page .hero-section::before {
+    display: none !important;
+}
+
+/* Fix Logo Background on Home Page */
+body.home-page .logo-container,
+body.home-page img.logo {
+    background-color: transparent !important;
+}
+
+/* Ensure links are white on Home Page */
+body.home-page a, 
+body.home-page h1, 
+body.home-page h2, 
+body.home-page h3,
+body.home-page p {
+    color: #ffffff;
+}
+
+/* Dark overlay container for about section on home page */
+body.home-page .about-content {
+    background-color: rgba(136, 136, 136, 0.4); /* 60% opaque black overlay */
+    padding: 40px;
+    border-radius: 4px;
+    max-width: 800px; /* Already set, but ensuring it's there */
+    margin: 0 auto; /* Already set, but ensuring it's there */
+    /* Initial state for scroll animation */
+    opacity: 0;
+    transform: translateY(30px);
+    /* Smooth transitions for both fade and slide */
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* Visible state when scrolled into view */
+body.home-page .about-content.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Ensure about section text is white for readability */
+body.home-page .about-content p {
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    font-weight: 400;
+}
+
+/* Ensure headings in about section are white */
+body.home-page .about-content h2,
+body.home-page .about-content h3 {
+    color: #ffffff;
+}
+
+/* Ensure action buttons are visible on home page with subtle shadow */
+body.home-page .action-btn {
+    color: #ffffff;
+    border-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+body.home-page .action-btn:hover {
+    background: #ffffff;
+    color: #1a1a1a;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================
+   MOBILE RESPONSIVE FIXES (max-width: 768px)
+   ============================================ */
+@media (max-width: 768px) {
+    /* 1. Product Grid - Single Column Stack */
+    .technical-grid,
+    .product-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px;
+    }
+    
+    .technical-item,
+    .product-card {
+        width: 100%;
+    }
+    
+    /* 2. Fluid Typography - Prevent Overflow */
+    h1 {
+        font-size: clamp(2rem, 5vw, 4rem) !important;
+        line-height: 1.2;
+    }
+    
+    h2 {
+        font-size: clamp(1.5rem, 4vw, 2.5rem) !important;
+    }
+    
+    h3 {
+        font-size: clamp(1.25rem, 3vw, 1.75rem) !important;
+    }
+    
+    .hero-text {
+        font-size: clamp(2rem, 5vw, 4rem) !important;
+        padding: 0 20px;
+    }
+    
+    body,
+    p {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+    
+    /* 3. Hero Section - Fix Background Attachment on Mobile */
+    .hero-section {
+        background-attachment: scroll !important; /* Fixes jitter on iOS */
+        background-size: cover;
+        background-position: center;
+    }
+    
+    body.home-page {
+        background-attachment: scroll !important; /* Fixes jitter on iOS */
+    }
+    
+    /* 4. Spacing & Padding - Reduce for Mobile */
+    body {
+        padding-top: 80px; /* Reduced from 100px */
+    }
+    
+    .container {
+        padding: 0 20px !important; /* Reduced from 32px */
+    }
+    
+    .about-section,
+    .products-section,
+    .section-products,
+    .contact-section {
+        padding: 40px 0 !important; /* Reduced from 120px */
+    }
+    
+    body.home-page .about-content {
+        padding: 30px 20px !important; /* Reduced from 40px */
+    }
+    
+    /* 5. Navigation Bar - Prevent Overlap */
+    .site-header .container {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    
+    .main-nav a,
+    .site-nav a {
+        font-size: 0.85rem; /* Reduced from 0.95rem */
+        padding: 4px 8px;
+    }
+    
+    .main-nav ul {
+        gap: 16px; /* Reduced from 32px */
+    }
+    
+    /* Allow horizontal scroll if needed for very small screens */
+    .main-nav {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .main-nav ul {
+        min-width: max-content;
+    }
+    
+    /* 6. Touch Targets - Minimum 44px Height */
+    .action-btn,
+    .btn,
+    .color-btn,
+    .submit-btn {
+        min-height: 44px;
+        padding: 12px 24px;
+    }
+    
+    .technical-item {
+        min-height: 44px;
+    }
+    
+    /* Additional Mobile Optimizations */
+    .scroll-indicator {
+        bottom: 30px;
+        right: 30px;
+        width: 32px;
+        height: 32px;
+    }
+    
+    /* Prevent horizontal scroll */
+    body {
+        overflow-x: hidden;
+        width: 100%;
+    }
+    
+    /* Modal adjustments for mobile */
+    .expanded-content {
+        width: 95% !important;
+        padding: 24px !important;
+        gap: 24px !important;
+    }
+    
+    /* About section text adjustments */
+    body.home-page .about-content p {
+        font-size: 15px;
+        line-height: 1.7;
+    }
 }

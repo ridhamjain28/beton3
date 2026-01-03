@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products | Beton</title>
-    <meta name="description" content="Indoor lighting systems designed for consistent performance and visual comfort.">
+    <meta name="description" content="Premium ceiling lighting systems designed for consistent performance and visual comfort. Based in India, engineered for the world.">
     
     <!-- Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,13 +13,381 @@
     
     <!-- Styles -->
     <link rel="stylesheet" href="assets/css/style.css">
+    
+    <style>
+        /* Product Grid Styles */
+        .products-section {
+            padding: 120px 0;
+            min-height: 80vh;
+        }
+        
+        .section-header {
+            margin-bottom: 64px;
+        }
+        
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 16px;
+            color: #111111;
+        }
+        
+        .section-header p {
+            font-size: clamp(1rem, 1.5vw, 1.125rem);
+            color: #555555;
+            max-width: 65ch;
+        }
+        
+        .cct-banner {
+            background: #1E1E1E;
+            color: #FFFFFF;
+            padding: 16px 24px;
+            text-align: center;
+            margin-bottom: 48px;
+            border-radius: 4px;
+        }
+        
+        .cct-banner p {
+            font-size: clamp(0.9rem, 1.2vw, 1rem);
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            margin: 0;
+            color: #FFFFFF;
+        }
+        
+        .technical-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+        
+        .technical-item {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        
+        .technical-item:hover {
+            transform: translateY(-4px);
+        }
+        
+        .technical-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border: 1px solid #E0E0E0;
+        }
+        
+        .model-number {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #111111;
+        }
+        
+        /* Modal Styles */
+        .expanded-view {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .expanded-view.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .expanded-content {
+            position: relative;
+            width: 90%;
+            max-width: 1400px;
+            max-height: 90vh;
+            background: #FFFFFF;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 48px;
+            overflow: hidden;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: transparent;
+            font-size: 32px;
+            line-height: 1;
+            cursor: pointer;
+            color: #000000;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.2s ease;
+        }
+        
+        .close-btn:hover {
+            opacity: 0.6;
+        }
+        
+        .image-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .product-details {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            color: #000000;
+        }
+        
+        .product-details::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .product-details h3 {
+            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            margin-bottom: 12px;
+            color: #000000;
+        }
+        
+        .product-details .category {
+            font-size: clamp(0.9rem, 1.2vw, 1rem);
+            color: #555555;
+            margin-bottom: 16px;
+        }
+        
+        .product-details .price {
+            font-size: clamp(1.25rem, 2vw, 1.5rem);
+            font-weight: 600;
+            color: #FF4400;
+            margin-bottom: 24px;
+        }
+        
+        .product-details p {
+            font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+            line-height: 1.6;
+            color: #000000;
+            margin-bottom: 32px;
+            flex-shrink: 1;
+        }
+        
+        .color-controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+        
+        .color-btn {
+            padding: 10px 20px;
+            border: 1px solid #E0E0E0;
+            background: #FFFFFF;
+            color: #000000;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .color-btn:hover {
+            border-color: #000000;
+        }
+        
+        .color-btn.active {
+            background: #000000;
+            color: #FFFFFF;
+            border-color: #000000;
+        }
+        
+        .specs-features {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+        
+        .specs-section h4,
+        .features-section h4 {
+            font-size: clamp(1rem, 1.3vw, 1.125rem);
+            margin-bottom: 16px;
+            color: #000000;
+        }
+        
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .specs-table tr {
+            border-bottom: 1px solid #E0E0E0;
+        }
+        
+        .specs-table td {
+            padding: 12px 0;
+            font-size: clamp(0.85rem, 1.1vw, 0.95rem);
+            color: #000000;
+        }
+        
+        .specs-table td:first-child {
+            font-weight: 500;
+            width: 40%;
+        }
+        
+        .specs-table td:last-child {
+            color: #555555;
+        }
+        
+        .features-section ul {
+            list-style: none;
+        }
+        
+        .features-section li {
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: clamp(0.85rem, 1.1vw, 0.95rem);
+            color: #000000;
+        }
+        
+        .features-section li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #000000;
+        }
+        
+        .details-panel {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .expanded-content {
+                grid-template-columns: 1fr;
+                width: 95%;
+                max-height: 95vh;
+                padding: 24px;
+                gap: 24px;
+            }
+            
+            .image-container {
+                min-height: 300px;
+            }
+            
+            .technical-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 24px;
+            }
+        }
+        
+        /* Navigation Styles */
+        .main-nav {
+            display: flex;
+        }
+        
+        .main-nav ul {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+        
+        .main-nav a {
+            font-size: 0.95rem;
+            color: #555555;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        
+        .main-nav a:hover,
+        .main-nav a.active {
+            color: #1E1E1E;
+        }
+        
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+        
+        .nav-toggle span {
+            width: 24px;
+            height: 2px;
+            background: #1E1E1E;
+            transition: all 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: flex;
+            }
+            
+            .main-nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #FFFFFF;
+                border-top: 1px solid #E0E0E0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+            
+            .main-nav.active {
+                max-height: 500px;
+            }
+            
+            .main-nav ul {
+                flex-direction: column;
+                padding: 24px;
+                gap: 16px;
+            }
+        }
+    </style>
 </head>
-<body class="spa">
+<body>
 
     <!-- Navigation -->
     <header class="site-header">
         <div class="container">
-            <a href="index.html" class="brand-logo" id="logo">BETON</a>
+            <a href="index.html" class="brand-logo">
+                <img src="Beton Logo.jpg" alt="Beton" class="logo-img">
+            </a>
             
             <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
                 <span></span>
@@ -29,8 +397,8 @@
             
             <nav class="main-nav">
                 <ul>
-                    <li><a href="index.html" id="philosophy-link">PHILOSOPHY</a></li>
-                    <li><a href="products.html" id="products-link" class="active">PRODUCTS</a></li>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="products.html" class="active">PRODUCTS</a></li>
                     <li><a href="specifications.html">SPECIFICATIONS</a></li>
                     <li><a href="support.html">CONTACT</a></li>
                 </ul>
@@ -38,28 +406,19 @@
         </div>
     </header>
 
-    <!-- STATE A: PHILOSOPHY (Current State) -->
-    <section id="state-a" class="state philosophy-state">
-        <div class="container">
-            <div class="philosophy-content">
-                <div class="hero-container">
-                    <h1 class="hero-text">Silence. Permanence. Light.</h1>
-                    <div class="manifesto">
-                        <p>We do not decorate. We engineer. Our process begins with raw aluminum and ends with pure light. Every fixture is machined, tested, and calibrated for visual silence. Based in India, engineered for the world.</p>
-                    </div>
-                    <a href="#" class="cta-button" id="explore-systems">Explore Systems →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- STATE B: PRODUCTS (Target State) -->
-    <section id="state-b" class="state product-state">
+    <!-- Products Section -->
+    <section class="products-section">
         <div class="container">
             <div class="section-header">
                 <h2>Product Systems</h2>
-                <p>A focused range of indoor lighting systems designed for consistent performance, visual comfort, and clear specification.</p>
+                <p>A focused range of ceiling lighting systems designed for consistent performance, visual comfort, and clear specification.</p>
             </div>
+            
+            <!-- CCT Banner -->
+            <div class="cct-banner">
+                <p>All Systems Available in 3000K | 4000K | 5000K | 6000K CCT</p>
+            </div>
+            
             <div id="technicalGrid" class="technical-grid">
                 <!-- Products injected via JS -->
             </div>
@@ -72,11 +431,10 @@
             <button id="closeBtn" class="close-btn" aria-label="Close">×</button>
             
             <div class="image-container">
-                <img src="assets/images/1 off.webp" alt="Product" class="flip-image background-img" id="bgImg">
-                <img src="assets/images/1 on.webp" alt="Product Lit" id="litImg" class="flip-image lit-img">
+                <img src="" alt="Product" class="flip-image" id="modalImage">
             </div>
             
-            <div class="product-details">
+            <div class="product-details details-panel">
                 <h3 id="expandedTitle"></h3>
                 <p id="expandedCategory" class="category"></p>
                 <p id="expandedPrice" class="price"></p>
@@ -108,33 +466,460 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-col">
-                <h3>BETON</h3>
-                <p class="copyright">&copy; 2025 Beton Engineering.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Documentation</h4>
-                <ul>
-                    <li><a href="#">Datasheets</a></li>
-                    <li><a href="#">CAD Drawings</a></li>
-                    <li><a href="#">Repair Manuals</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Contact</h4>
-                <ul>
-                    <li><a href="#">Engineering Support</a></li>
-                    <li><a href="#">Warranty Claims</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
+    <!-- GSAP Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Flip.min.js"></script>
+    
+    <!-- Product Data & Scripts -->
+    <script>
+        // Register GSAP Plugin
+        gsap.registerPlugin(Flip);
+        
+        // Store reference to clicked thumbnail for return animation
+        let clickedThumbnail = null;
+        let isClosing = false;
+        
+        // Product Data - Ceiling Lights Only
+        const products = [
+            {
+                id: "SYS-01",
+                name: "Linear Suspension System",
+                category: "Ceiling Mounted",
+                price: "₹45,000",
+                description: "Modular linear lighting system for general illumination in open-plan workspaces and dining areas.",
+                specs: {
+                    "Power": "40W LED",
+                    "Lumens": "3200 lm",
+                    "CRI": "> 90",
+                    "UGR": "< 19",
+                    "Lifetime": "50,000 hours",
+                    "Dimensions": "1200mm × 40mm × 60mm",
+                    "Material": "Extruded Aluminum",
+                    "Warranty": "5 years"
+                },
+                features: [
+                    "Modular aluminum extrusion with tool-free joining",
+                    "Direct/Indirect light distribution options",
+                    "Integrated DALI dimming drivers",
+                    "Hot-swappable LED modules for easy maintenance",
+                    "Available in 600mm, 1200mm, 1800mm lengths",
+                    "IP40 rated for indoor use"
+                ],
+                images: {
+                    off: "assets/product images/1 off.webp",
+                    on: "assets/product images/1 off.webp" // Using same for now, can be updated when on images are available
+                }
+            },
+            {
+                id: "RENDER-1",
+                name: "System 01",
+                category: "Ceiling Suspension",
+                price: "₹38,000",
+                description: "General illumination for open-plan workspaces and dining areas.",
+                specs: {
+                    "Power": "35W LED",
+                    "Lumens": "2800 lm",
+                    "CRI": "> 90",
+                    "UGR": "< 19",
+                    "Lifetime": "50,000 hours",
+                    "Dimensions": "1200mm × 40mm × 60mm",
+                    "Material": "Extruded Aluminum",
+                    "Warranty": "5 years"
+                },
+                features: [
+                    "Modular aluminum extrusion",
+                    "Direct/Indirect distribution",
+                    "Integrated DALI drivers",
+                    "Tool-free joining mechanism"
+                ],
+                images: {
+                    off: "assets/product images/RENDER-1 P.webp",
+                    on: "assets/product images/RENDER-1 P.webp"
+                }
+            },
+            {
+                id: "RENDER-2",
+                name: "System 02",
+                category: "Ceiling Mount",
+                price: "₹42,000",
+                description: "Architectural ceiling lighting for corridors, amenities, and secondary spaces.",
+                specs: {
+                    "Power": "30W LED",
+                    "Lumens": "2400 lm",
+                    "CRI": "> 85",
+                    "IP Rating": "IP54",
+                    "Lifetime": "50,000 hours",
+                    "Warranty": "5 years"
+                },
+                features: [
+                    "IP54 rated enclosure",
+                    "Impact resistant housing",
+                    "Hidden tamper-proof fixings",
+                    "Emergency battery backup option"
+                ],
+                images: {
+                    off: "assets/product images/RENDER-2 P-3.webp",
+                    on: "assets/product images/RENDER-2 P-3.webp"
+                }
+            },
+            {
+                id: "RENDER-4",
+                name: "System 04",
+                category: "Ceiling Suspension",
+                price: "₹40,000",
+                description: "Linear suspension system for modern office environments.",
+                specs: {
+                    "Power": "32W LED",
+                    "Lumens": "2600 lm",
+                    "CRI": "> 90",
+                    "UGR": "< 19",
+                    "Lifetime": "50,000 hours",
+                    "Warranty": "5 years"
+                },
+                features: [
+                    "Modular design",
+                    "Tool-free assembly",
+                    "Integrated dimming",
+                    "Thermal management"
+                ],
+                images: {
+                    off: "assets/product images/RENDER-4 P-2.webp",
+                    on: "assets/product images/RENDER-4 P-2.webp"
+                }
+            },
+            {
+                id: "RENDER-1-P1",
+                name: "System 01 Variant",
+                category: "Ceiling Mount",
+                price: "₹35,000",
+                description: "Compact ceiling lighting solution for focused illumination.",
+                specs: {
+                    "Power": "25W LED",
+                    "Lumens": "2000 lm",
+                    "CRI": "> 90",
+                    "Lifetime": "50,000 hours",
+                    "Warranty": "5 years"
+                },
+                features: [
+                    "Compact design",
+                    "High CRI LED",
+                    "Easy installation",
+                    "Energy efficient"
+                ],
+                images: {
+                    off: "assets/product images/RENDER-1 P-1.webp",
+                    on: "assets/product images/RENDER-1 P-1.webp"
+                }
+            },
+            {
+                id: "RENDER-1-P5",
+                name: "System 01 Extended",
+                category: "Ceiling Suspension",
+                price: "₹48,000",
+                description: "Extended linear system for large open spaces.",
+                specs: {
+                    "Power": "45W LED",
+                    "Lumens": "3600 lm",
+                    "CRI": "> 90",
+                    "UGR": "< 19",
+                    "Lifetime": "50,000 hours",
+                    "Warranty": "5 years"
+                },
+                features: [
+                    "Extended length options",
+                    "High lumen output",
+                    "Modular connectivity",
+                    "Professional grade"
+                ],
+                images: {
+                    off: "assets/product images/RENDER-1 P-5.webp",
+                    on: "assets/product images/RENDER-1 P-5.webp"
+                }
+            }
+        ];
+        
+        // Function to render products
+        function renderProducts() {
+            const grid = document.getElementById('technicalGrid');
+            if (!grid) return;
+            
+            grid.innerHTML = products.map((product, index) => `
+                <div class="technical-item" data-id="${product.id}" data-flip-id="product-${index}">
+                    <img src="${product.images.off}" alt="${product.name}" data-flip-id="product-${index}" loading="lazy">
+                    <div class="model-number">${product.id}</div>
+                </div>
+            `).join('');
+            
+            // Add event listeners to technical items
+            document.querySelectorAll('.technical-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const clickedImage = this.querySelector('img');
+                    openExpandedView(id, clickedImage);
+                });
+            });
+        }
+        
+        // Function to open expanded view with GSAP Flip
+        function openExpandedView(productId, clickedImage) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            // Store reference to clicked thumbnail for reverse animation
+            clickedThumbnail = clickedImage;
+            isClosing = false;
+            // Keep grid slot in flow, but invisible (layout stable)
+            clickedThumbnail.style.opacity = '0';
+            clickedThumbnail.style.visibility = 'hidden';
+            clickedThumbnail.style.pointerEvents = 'none';
+            
+            const expandedView = document.getElementById('expandedView');
+            const modalImage = document.getElementById('modalImage');
+            const expandedTitle = document.getElementById('expandedTitle');
+            const expandedCategory = document.getElementById('expandedCategory');
+            const expandedPrice = document.getElementById('expandedPrice');
+            const expandedDesc = document.getElementById('expandedDesc');
+            const specsTable = document.getElementById('specsTable');
+            const featuresList = document.getElementById('featuresList');
+            const detailsPanel = document.querySelector('.details-panel');
+            const expandedContent = document.querySelector('.expanded-content');
+            
+            // Capture the state of the clicked image
+            const state = Flip.getState(clickedImage);
+            
+            // Update content
+            expandedTitle.textContent = `${product.id} - ${product.name}`;
+            expandedCategory.textContent = product.category;
+            expandedPrice.textContent = product.price;
+            expandedDesc.textContent = product.description;
+            
+            // Populate specs table
+            specsTable.innerHTML = '';
+            Object.entries(product.specs).forEach(([key, value]) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${key}</td>
+                    <td>${value}</td>
+                `;
+                specsTable.appendChild(row);
+            });
+            
+            // Populate features list
+            featuresList.innerHTML = '';
+            product.features.forEach(feature => {
+                const li = document.createElement('li');
+                li.textContent = feature;
+                featuresList.appendChild(li);
+            });
+            
+            // Set image source and assign flip-id
+            modalImage.src = product.images.off;
+            modalImage.setAttribute('data-flip-id', clickedImage.getAttribute('data-flip-id'));
+            
+            // Ensure modal container is visible (in case it was hidden during close)
+            if (expandedContent) gsap.set(expandedContent, { autoAlpha: 1 });
+            expandedView.style.pointerEvents = '';
+            
+            // Immediately change DOM - show modal
+            expandedView.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Fade in backdrop
+            gsap.to(expandedView, {
+                backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                duration: 0.6,
+                ease: 'power3.inOut'
+            });
+            
+            // Execute FLIP animation
+            Flip.from(state, {
+                targets: modalImage,
+                duration: 0.6,
+                ease: 'power3.inOut',
+                absolute: true,
+                onComplete: () => {
+                    // Fade in text details after image lands
+                    gsap.to(detailsPanel, {
+                        autoAlpha: 1,
+                        x: 0,
+                        duration: 0.4,
+                        ease: 'power2.out'
+                    });
+                }
+            });
+            
+            // Set up color temperature controls
+            document.querySelectorAll('.color-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const temp = this.getAttribute('data-temp');
+                    // Color temperature functionality can be added here
+                    console.log(`Color temperature changed to ${temp}`);
+                });
+            });
+        }
+        
+        // Function to close expanded view with a true "return to slot" animation
+        function closeExpandedView() {
+            const expandedView = document.getElementById('expandedView');
+            const modalImage = document.getElementById('modalImage');
+            const detailsPanel = document.querySelector('.details-panel');
 
-    <!-- Scripts -->
-    <script src="assets/js/products.js"></script>
-    <script src="assets/js/main.js"></script>
+            if (isClosing) return;
+            isClosing = true;
+
+            // If we don't know where to return, do a simple close (no jump risk)
+            if (!clickedThumbnail) {
+                gsap.to(expandedView, {
+                    backgroundColor: 'rgba(0, 0, 0, 0)',
+                    duration: 0.25,
+                    ease: 'power2.in',
+                    onComplete: () => {
+                        expandedView.classList.remove('active');
+                        document.body.style.overflow = '';
+                        isClosing = false;
+                    }
+                });
+                return;
+            }
+
+            const expandedContent = document.querySelector('.expanded-content');
+            // Keep modal z-index high through the entire flight
+            expandedView.style.zIndex = '999';
+            // Hide the live modal image to prevent double-visibility during the flight
+            modalImage.style.visibility = 'hidden';
+
+            // 1) Fade out the text panel quickly
+            gsap.to(detailsPanel, {
+                autoAlpha: 0,
+                x: 20,
+                duration: 0.18,
+                ease: 'power2.in'
+            });
+
+            // 2) Compute exact rects (First/Last)
+            const fromRect = modalImage.getBoundingClientRect();
+            const toRect = clickedThumbnail.getBoundingClientRect();
+
+            // 3) Create a "flying" element that animates from modal -> grid slot using inverse-scale FLIP
+            const flying = modalImage.cloneNode(true);
+            flying.removeAttribute('id');
+            flying.style.position = 'fixed';
+            flying.style.top = `${toRect.top}px`;
+            flying.style.left = `${toRect.left}px`;
+            flying.style.width = `${toRect.width}px`;
+            flying.style.height = `${toRect.height}px`;
+            flying.style.margin = '0';
+            flying.style.zIndex = '2000';
+            flying.style.pointerEvents = 'none';
+            flying.style.objectFit = 'contain';
+            flying.style.background = '#FFFFFF';
+            flying.style.transformOrigin = 'top left';
+
+            // Compute inverse transform from modal rect to target rect
+            const scaleX = fromRect.width / toRect.width;
+            const scaleY = fromRect.height / toRect.height;
+            const translateX = fromRect.left - toRect.left;
+            const translateY = fromRect.top - toRect.top;
+
+            gsap.set(flying, {
+                transform: `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`
+            });
+
+            document.body.appendChild(flying);
+
+            // Prevent interactions during the close flight
+            expandedView.style.pointerEvents = 'none';
+
+            // 4) Hide the modal content while the image flies (avoids layout reflow flicker)
+            if (expandedContent) gsap.to(expandedContent, { autoAlpha: 0, duration: 0.12, ease: 'power1.out' });
+
+            // 5) Animate backdrop fade-out in parallel
+            gsap.to(expandedView, {
+                backgroundColor: 'rgba(0, 0, 0, 0)',
+                duration: 0.55,
+                ease: 'power3.inOut'
+            });
+
+            // 6) Animate the flying element with inverse-scale back to identity (target slot)
+            const tl = gsap.timeline({
+                defaults: { duration: 0.55, ease: 'power3.inOut' }
+            });
+
+            tl.to(flying, {
+                transform: 'translate(0px, 0px) scale(1, 1)'
+            });
+
+            // Safety: wait for transition end via GSAP onComplete + timeout
+            const cleanup = () => {
+                // Restore grid thumbnail
+                clickedThumbnail.style.opacity = '1';
+                clickedThumbnail.style.visibility = 'visible';
+                clickedThumbnail.style.pointerEvents = '';
+
+                // Cleanup + reset
+                flying.remove();
+                if (expandedContent) gsap.set(expandedContent, { autoAlpha: 1 });
+                modalImage.style.visibility = 'visible';
+                expandedView.classList.remove('active');
+                expandedView.style.pointerEvents = '';
+                expandedView.style.zIndex = '';
+                document.body.style.overflow = '';
+                clickedThumbnail = null;
+                isClosing = false;
+            };
+
+            tl.eventCallback('onComplete', () => {
+                // Wait a tiny frame to ensure no snap
+                setTimeout(cleanup, 30);
+            });
+
+            // Fallback safety timeout
+            setTimeout(() => {
+                if (isClosing) cleanup();
+            }, 700);
+        }
+        
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            
+            // Close button
+            document.getElementById('closeBtn').addEventListener('click', closeExpandedView);
+            
+            // Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    const expandedView = document.getElementById('expandedView');
+                    if (expandedView.classList.contains('active')) {
+                        closeExpandedView();
+                    }
+                }
+            });
+            
+            // Overlay click
+            document.getElementById('expandedView').addEventListener('click', (e) => {
+                if (e.target.id === 'expandedView') {
+                    closeExpandedView();
+                }
+            });
+            
+            // Mobile navigation toggle
+            const navToggle = document.querySelector('.nav-toggle');
+            const mainNav = document.querySelector('.main-nav');
+            
+            if (navToggle && mainNav) {
+                navToggle.addEventListener('click', () => {
+                    navToggle.classList.toggle('active');
+                    mainNav.classList.toggle('active');
+                    
+                    const isExpanded = navToggle.classList.contains('active');
+                    navToggle.setAttribute('aria-expanded', isExpanded);
+                });
+            }
+        });
+    </script>
 </body>
 </html>

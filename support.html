@@ -11,92 +11,331 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
     <!-- Styles -->
     <link rel="stylesheet" href="assets/css/style.css">
+    
+    <style>
+        .contact-section {
+            padding: 120px 0;
+            min-height: 80vh;
+        }
+        
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: start;
+        }
+        
+        .contact-info h2,
+        .contact-form-wrapper h2 {
+            font-size: clamp(1.75rem, 3vw, 2.5rem);
+            margin-bottom: 32px;
+            color: #111111;
+        }
+        
+        .contact-details {
+            margin-bottom: 48px;
+        }
+        
+        .contact-item {
+            margin-bottom: 32px;
+        }
+        
+        .contact-item h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #111111;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .contact-item p {
+            font-size: 1rem;
+            color: #555555;
+            line-height: 1.6;
+            margin-bottom: 4px;
+        }
+        
+        .contact-map {
+            height: 400px;
+            width: 100%;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .contact-form-wrapper {
+            background: #FFFFFF;
+            padding: 48px;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #111111;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 1rem;
+            font-family: var(--font-family);
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            background: #FFFFFF;
+            color: #111111;
+            transition: border-color 0.2s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1E1E1E;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 16px 32px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #FFFFFF;
+            background: #1E1E1E;
+            border: 1px solid #1E1E1E;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+        }
+        
+        .submit-btn:hover {
+            background: #000000;
+            border-color: #000000;
+        }
+        
+        @media (max-width: 968px) {
+            .contact-layout {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+            
+            .contact-form-wrapper {
+                padding: 32px;
+            }
+        }
+    </style>
 </head>
 <body>
 
     <!-- Navigation -->
     <header class="site-header">
         <div class="container">
-            <a href="index.html" class="brand-logo">BETON</a>
-            <nav class="site-nav">
+            <a href="index.html" class="brand-logo">
+                <img src="Beton Logo.jpg" alt="Beton" class="logo-img">
+            </a>
+            
+            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <nav class="main-nav">
                 <ul>
-                    <li><a href="products.html">Products</a></li>
-                    <li><a href="philosophy.html">Philosophy</a></li>
-                    <li><a href="specifications.html">Specifications</a></li>
-                    <li><a href="support.html">Support</a></li>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="products.html">PRODUCTS</a></li>
+                    <li><a href="specifications.html">SPECIFICATIONS</a></li>
+                    <li><a href="support.html" class="active">CONTACT</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Support -->
-    <section class="section-products">
+    <!-- Contact Section -->
+    <section class="contact-section">
         <div class="container">
-            <div class="section-header">
-                <h2>Technical Support & Documentation</h2>
-                <p>Resources for specification, installation, and maintenance.</p>
-            </div>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 32px;">
-                <div class="product-card" style="padding: 24px; background: #fff; border: 1px solid #E0E0E0;">
-                    <h3>Datasheets</h3>
-                    <p>Detailed technical specifications for all current systems.</p>
-                    <a href="#" class="btn btn-primary" style="margin-top: 16px;">Access Library</a>
+            <div class="contact-layout">
+                <!-- Left Column: Contact Info -->
+                <div class="contact-info">
+                    <h2>Get in Touch</h2>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <h3>Phone</h3>
+                            <p>+91 99099 12897</p>
+                            <p>+91 98988 45091</p>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <h3>Address</h3>
+                            <p>12, Kashyap Chambers, Station Road,<br>Bardoli - 394601, Dist. Surat.</p>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <h3>Timings</h3>
+                            <p>Mon - Sat: 9:30 AM to 8:00 PM</p>
+                            <p>Closed Sundays</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Map -->
+                    <div id="map" class="contact-map"></div>
                 </div>
                 
-                <div class="product-card" style="padding: 24px; background: #fff; border: 1px solid #E0E0E0;">
-                    <h3>CAD Drawings</h3>
-                    <p>2D and 3D models for architectural integration (DWG, STEP, RFA).</p>
-                    <a href="#" class="btn btn-primary" style="margin-top: 16px;">Download Files</a>
-                </div>
-
-                <div class="product-card" style="padding: 24px; background: #fff; border: 1px solid #E0E0E0;">
-                    <h3>Installation</h3>
-                    <p>Step-by-step guides and wiring diagrams.</p>
-                    <a href="#" class="btn btn-primary" style="margin-top: 16px;">View Guides</a>
-                </div>
-
-                <div class="product-card" style="padding: 24px; background: #fff; border: 1px solid #E0E0E0;">
-                    <h3>Warranty</h3>
-                    <p>Standard 5-year warranty terms and claim process.</p>
-                    <a href="#" class="btn btn-primary" style="margin-top: 16px;">Read Policy</a>
-                </div>
-                
-                 <div class="product-card" style="padding: 24px; background: #fff; border: 1px solid #E0E0E0;">
-                    <h3>Contact</h3>
-                    <p>Direct line to engineering support.</p>
-                    <a href="#" class="btn btn-primary" style="margin-top: 16px;">Email Support</a>
+                <!-- Right Column: Contact Form -->
+                <div class="contact-form-wrapper">
+                    <h2>Send us a Message</h2>
+                    <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                        <input type="hidden" name="access_key" value="2d7c030f-aa6f-4fc4-a548-d8b13990b5e0">
+                        
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="number">Number</label>
+                            <input type="tel" id="number" name="number" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="6" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-col">
-                <h3>BETON</h3>
-                <p class="copyright">&copy; 2025 Beton Engineering.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Documentation</h4>
-                <ul>
-                    <li><a href="#">Datasheets</a></li>
-                    <li><a href="#">CAD Drawings</a></li>
-                    <li><a href="#">Repair Manuals</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Contact</h4>
-                <ul>
-                    <li><a href="#">Engineering Support</a></li>
-                    <li><a href="#">Warranty Claims</a></li>
-                </ul>
-            </div>
+    <!-- Toast Notification -->
+    <div id="toastNotification" class="toast-notification" role="status" aria-live="polite" aria-atomic="true">
+        <div class="toast-notification__content">
+            <span id="toastMessage">Message submitted successfully.</span>
+            <button type="button" class="toast-notification__close" aria-label="Close notification">×</button>
         </div>
-    </footer>
+    </div>
 
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Scripts -->
+    <script>
+        // Mobile navigation toggle
+        document.addEventListener('DOMContentLoaded', () => {
+            const navToggle = document.querySelector('.nav-toggle');
+            const mainNav = document.querySelector('.main-nav');
+            
+            if (navToggle && mainNav) {
+                navToggle.addEventListener('click', () => {
+                    navToggle.classList.toggle('active');
+                    mainNav.classList.toggle('active');
+                    
+                    const isExpanded = navToggle.classList.contains('active');
+                    navToggle.setAttribute('aria-expanded', isExpanded);
+                });
+            }
+            
+            // Initialize Map
+            const map = L.map('map').setView([21.1234, 73.1123], 15);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+            
+            // Add marker for address
+            L.marker([21.1234, 73.1123])
+                .addTo(map)
+                .bindPopup('12, Kashyap Chambers, Station Road, Bardoli - 394601, Dist. Surat.')
+                .openPopup();
+
+            // Contact form AJAX submit (stay on page)
+            const form = document.getElementById('contactForm');
+            const toast = document.getElementById('toastNotification');
+            const toastMessage = document.getElementById('toastMessage');
+            const toastClose = toast?.querySelector('.toast-notification__close');
+
+            let toastTimer = null;
+
+            function hideToast() {
+                if (!toast) return;
+                toast.classList.remove('is-visible');
+                if (toastTimer) {
+                    clearTimeout(toastTimer);
+                    toastTimer = null;
+                }
+            }
+
+            function showToast(message) {
+                if (!toast) return;
+                if (toastMessage) toastMessage.textContent = message;
+                toast.classList.add('is-visible');
+
+                if (toastTimer) clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => hideToast(), 15000);
+            }
+
+            if (toastClose) {
+                toastClose.addEventListener('click', () => hideToast());
+            }
+
+            if (form) {
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    const submitBtn = form.querySelector('button[type=\"submit\"]');
+                    const prevBtnText = submitBtn ? submitBtn.textContent : null;
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.textContent = 'Sending…';
+                    }
+
+                    try {
+                        const formData = new FormData(form);
+                        const res = await fetch('https://api.web3forms.com/submit', {
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json'
+                            },
+                            body: formData
+                        });
+
+                        if (res.ok) {
+                            form.reset();
+                            showToast('Message submitted successfully.');
+                        } else {
+                            showToast('Message failed to send. Please try again.');
+                        }
+                    } catch (err) {
+                        showToast('Message failed to send. Please try again.');
+                    } finally {
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.textContent = prevBtnText || 'Send Message';
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

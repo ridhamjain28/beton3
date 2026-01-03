@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beton | Engineered Lighting Systems</title>
-    <meta name="description" content="Premium, engineering-led lighting brand focused on performance, reliability, and clear specification.">
+    <meta name="description" content="Premium, engineering-led lighting brand focused on performance, reliability, and clear specification. Based in India, engineered for the world.">
     
     <!-- Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,12 +14,14 @@
     <!-- Styles -->
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="spa">
+<body class="home-page">
 
     <!-- Navigation -->
     <header class="site-header">
         <div class="container">
-            <a href="index.html" class="brand-logo" id="logo">BETON</a>
+            <a href="index.html" class="brand-logo">
+                <img src="Beton Logo.jpg" alt="Beton" class="logo-img">
+            </a>
             
             <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
                 <span></span>
@@ -29,8 +31,8 @@
             
             <nav class="main-nav">
                 <ul>
-                    <li><a href="index.html" id="philosophy-link" class="active">PHILOSOPHY</a></li>
-                    <li><a href="products.html" id="products-link">PRODUCTS</a></li>
+                    <li><a href="index.html" class="active">HOME</a></li>
+                    <li><a href="products.html">PRODUCTS</a></li>
                     <li><a href="specifications.html">SPECIFICATIONS</a></li>
                     <li><a href="support.html">CONTACT</a></li>
                 </ul>
@@ -38,103 +40,95 @@
         </div>
     </header>
 
-    <!-- STATE A: PHILOSOPHY (Current State) -->
-    <section id="state-a" class="state philosophy-state">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-text">Lighting Beyond Eternity.</h1>
+        </div>
+        <div class="scroll-indicator">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section">
         <div class="container">
-            <div class="philosophy-content">
-                <div class="hero-container">
-                    <h1 class="hero-text">Silence. Permanence. Light.</h1>
-                    <div class="manifesto">
-                        <p>We do not decorate. We engineer. Our process begins with raw aluminum and ends with pure light. Every fixture is machined, tested, and calibrated for visual silence. Based in India, engineered for the world.</p>
-                    </div>
-                    <a href="#" class="cta-button" id="explore-systems">Explore Systems →</a>
+            <div class="about-content">
+                <p>Beton develops indoor lighting fixtures engineered for precision, consistency, and long-term reliability. The collection is designed to support clear specification, predictable installation, and stable performance across interior environments.</p>
+                
+                <p>Rather than relying on visual appeal alone, Beton focuses on measurable performance—controlled optics, managed glare, and defined colour behaviour—so lighting performs as intended throughout its service life.</p>
+                
+                <p>Each product is developed with attention to system compatibility, installation conditions, and real-world operating parameters. Documentation is structured to reduce ambiguity during design, coordination, and execution, allowing lighting decisions to be made with confidence.</p>
+                
+                <div class="action-buttons">
+                    <a href="specifications.html" class="action-btn">View Specifications</a>
+                    <a href="products.html" class="action-btn">View Products</a>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- STATE B: PRODUCTS (Target State) -->
-    <section id="state-b" class="state product-state">
-        <div class="container">
-            <div class="section-header">
-                <h2>Product Systems</h2>
-                <p>A focused range of indoor lighting systems designed for consistent performance, visual comfort, and clear specification.</p>
-            </div>
-            <div id="technicalGrid" class="technical-grid">
-                <!-- Products injected via JS -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Expanded View Modal -->
-    <div id="expandedView" class="expanded-view">
-        <div class="expanded-content">
-            <button id="closeBtn" class="close-btn" aria-label="Close">×</button>
-            
-            <div class="image-container">
-                <img src="assets/images/1 off.webp" alt="Product" class="flip-image background-img" id="bgImg">
-                <img src="assets/images/1 on.webp" alt="Product Lit" id="litImg" class="flip-image lit-img">
-            </div>
-            
-            <div class="product-details">
-                <h3 id="expandedTitle"></h3>
-                <p id="expandedCategory" class="category"></p>
-                <p id="expandedPrice" class="price"></p>
-                <p id="expandedDesc"></p>
-                
-                <!-- Color Temperature Controls -->
-                <div class="color-controls">
-                    <button class="color-btn active" data-temp="3000K">3000K</button>
-                    <button class="color-btn" data-temp="4000K">4000K</button>
-                    <button class="color-btn" data-temp="6000K">6000K</button>
-                </div>
-                
-                <div class="specs-features">
-                    <div class="specs-section">
-                        <h4>Specifications</h4>
-                        <table id="specsTable" class="specs-table">
-                            <!-- Specs injected via JS -->
-                        </table>
-                    </div>
-                    
-                    <div class="features-section">
-                        <h4>Features</h4>
-                        <ul id="featuresList">
-                            <!-- Features injected via JS -->
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-col">
-                <h3>BETON</h3>
-                <p class="copyright">&copy; 2025 Beton Engineering.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Documentation</h4>
-                <ul>
-                    <li><a href="#">Datasheets</a></li>
-                    <li><a href="#">CAD Drawings</a></li>
-                    <li><a href="#">Repair Manuals</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Contact</h4>
-                <ul>
-                    <li><a href="#">Engineering Support</a></li>
-                    <li><a href="#">Warranty Claims</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
 
     <!-- Scripts -->
-    <script src="assets/js/products.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script>
+        // Mobile navigation toggle
+        document.addEventListener('DOMContentLoaded', () => {
+            const navToggle = document.querySelector('.nav-toggle');
+            const mainNav = document.querySelector('.main-nav');
+            
+            if (navToggle && mainNav) {
+                navToggle.addEventListener('click', () => {
+                    navToggle.classList.toggle('active');
+                    mainNav.classList.toggle('active');
+                    
+                    const isExpanded = navToggle.classList.contains('active');
+                    navToggle.setAttribute('aria-expanded', isExpanded);
+                });
+            }
+            
+            // Scroll indicator click
+            const scrollIndicator = document.querySelector('.scroll-indicator');
+            if (scrollIndicator) {
+                scrollIndicator.addEventListener('click', () => {
+                    document.querySelector('.about-section').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+                
+                // Fade out scroll indicator when scrolling down
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 10) {
+                        scrollIndicator.style.opacity = '0';
+                        scrollIndicator.style.pointerEvents = 'none';
+                    } else {
+                        scrollIndicator.style.opacity = '1';
+                        scrollIndicator.style.pointerEvents = 'auto';
+                    }
+                });
+            }
+            
+            // Scroll-triggered fade-in animation for about section (reversible)
+            const aboutContent = document.querySelector('.about-content');
+            if (aboutContent) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        // Toggle visible class based on intersection state
+                        if (entry.isIntersecting) {
+                            // Element is intersecting (visible in viewport) - add visible class
+                            entry.target.classList.add('visible');
+                        } else {
+                            // Element is not intersecting (out of viewport) - remove visible class
+                            entry.target.classList.remove('visible');
+                        }
+                    });
+                }, {
+                    threshold: 0.2 // Trigger when 20% visible
+                });
+                
+                observer.observe(aboutContent);
+            }
+        });
+    </script>
 </body>
 </html>
