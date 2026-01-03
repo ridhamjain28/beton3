@@ -5,8 +5,6 @@
     --bg-primary: #F7F7F5;
     --text-primary: #1E1E1E;
     --text-secondary: #555555;
-    --brand-blue: #004488;
-    --accent-orange: #FF6600;
     --border-color: #E0E0E0;
     
     /* Typography */
@@ -19,6 +17,12 @@
     --spacing-md: 32px;
     --spacing-lg: 64px;
     --spacing-xl: 120px;
+    
+    /* Z-Index Scale (Standardized) */
+    --z-header: 1000;
+    --z-modal-backdrop: 2000;
+    --z-modal-content: 2001;
+    --z-toast: 3000;
 }
 
 /* Reset & Base */
@@ -29,7 +33,7 @@
 }
 
 body {
-    background-color: #F2F2F2; /* Premium Light Concrete Grey */
+    background-color: #e0e0e0; /* Premium Light Concrete Grey */
     color: var(--text-primary);
     font-family: var(--font-family);
     font-size: var(--body-size);
@@ -117,8 +121,18 @@ p {
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1000; /* High z-index to float above all content */
+    z-index: var(--z-header); /* High z-index to float above all content */
     background-color: #FFFFFF; /* White card effect against grey background */
+}
+
+/* Scroll anchor offset compensation for fixed header */
+:target::before {
+    content: "";
+    display: block;
+    height: 100px; /* Match header height + padding */
+    margin-top: -100px;
+    visibility: hidden;
+    pointer-events: none;
 }
 
 .site-header .container {
@@ -395,13 +409,19 @@ p {
         display: flex;
     }
     
+    /* Hamburger icon - BLACK on white header */
+    .nav-toggle span {
+        background: #000000 !important;
+    }
+    
     .main-nav {
         position: absolute;
         top: 100%;
         left: 0;
         width: 100%;
-        background: #FFFFFF;
-        border-top: 1px solid #E0E0E0;
+        background: #CCCCCC !important; /* Light grey dropdown */
+        border-top: none !important;
+        border: none !important;
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.3s ease;
@@ -415,6 +435,12 @@ p {
         flex-direction: column;
         padding: 24px;
         gap: 16px;
+        background: transparent !important;
+    }
+    
+    /* Menu links - BLACK text on light grey */
+    .main-nav a {
+        color: #000000 !important;
     }
 }
 
@@ -494,7 +520,7 @@ p {
     position: fixed;
     right: 24px;
     bottom: 24px;
-    z-index: 3000;
+    z-index: var(--z-toast);
     opacity: 0;
     transform: translateY(8px);
     pointer-events: none;
@@ -548,6 +574,16 @@ p {
     padding: var(--spacing-lg) 0;
     border-top: 1px solid var(--border-color);
     font-size: 0.9rem;
+}
+
+/* Scroll anchor offset compensation for fixed header */
+:target::before {
+    content: "";
+    display: block;
+    height: 100px; /* Match header height + padding */
+    margin-top: -100px;
+    visibility: hidden;
+    pointer-events: none;
 }
 
 /* Homepage Specific Styles */
@@ -735,21 +771,129 @@ body.home-page .action-btn:hover {
 
 /* ============================================
    MOBILE RESPONSIVE FIXES (max-width: 768px)
+   WHITE HEADER + LIGHT GREY CONTENT
    ============================================ */
 @media (max-width: 768px) {
-    /* 1. Product Grid - Single Column Stack */
+    
+    /* ==========================================
+       1. CONTENT BACKGROUND - LIGHT GREY #CCCCCC
+       ========================================== */
+    html,
+    body {
+        background-color: #e0e0e0 !important;
+        margin: 0 !important;
+        padding-top: 80px !important;
+        overflow-x: hidden;
+        width: 100%;
+    }
+    
+    /* Home page exception - full screen hero */
+    body.home-page {
+        padding-top: 0 !important;
+    }
+    
+    /* Containers inherit light grey background */
+    .container,
+    .products-section,
+    .section-products,
+    .about-section,
+    .contact-section,
+    .spec-grid,
+    main,
+    article,
+    section {
+        background-color: transparent !important;
+        background: transparent !important;
+    }
+    
+    /* ==========================================
+       2. HEADER - WHITE BACKGROUND #FFFFFF
+       ========================================== */
+    .site-header,
+    header {
+        background-color: #FFFFFF !important;
+        background: #FFFFFF !important;
+        border: none !important;
+        border-bottom: none !important;
+        box-shadow: none !important;
+        outline: none !important;
+        padding: 12px 0;
+    }
+    
+    /* Kill ALL pseudo-element borders/lines */
+    .site-header::before,
+    .site-header::after,
+    header::before,
+    header::after,
+    nav::before,
+    nav::after,
+    .main-nav::before,
+    .main-nav::after {
+        display: none !important;
+        content: none !important;
+    }
+    
+    .site-header .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: transparent !important;
+    }
+    
+    /* ==========================================
+       3. BLACK TEXT/ICONS ON WHITE HEADER
+       ========================================== */
+    .nav-toggle span {
+        background: #000000 !important;
+    }
+    
+    .main-nav a,
+    .site-nav a {
+        color: #000000 !important;
+        font-size: 0.85rem;
+        padding: 4px 8px;
+    }
+    
+    .main-nav a:hover,
+    .main-nav a.active {
+        color: #333333 !important;
+    }
+    
+    /* ==========================================
+       4. MENU OVERLAY - LIGHT GREY #CCCCCC
+       ========================================== */
+    .main-nav {
+        background: #CCCCCC !important;
+        border: none !important;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .main-nav ul {
+        gap: 16px;
+        min-width: max-content;
+        background: transparent !important;
+    }
+    
+    /* ==========================================
+       5. PRODUCT GRID - SINGLE COLUMN
+       ========================================== */
     .technical-grid,
     .product-grid {
         grid-template-columns: 1fr !important;
         gap: 20px;
+        background: transparent !important;
     }
     
     .technical-item,
     .product-card {
         width: 100%;
+        background: transparent !important;
     }
     
-    /* 2. Fluid Typography - Prevent Overflow */
+    /* ==========================================
+       6. TYPOGRAPHY - FLUID SIZING
+       ========================================== */
     h1 {
         font-size: clamp(2rem, 5vw, 4rem) !important;
         line-height: 1.2;
@@ -768,73 +912,47 @@ body.home-page .action-btn:hover {
         padding: 0 20px;
     }
     
-    body,
-    p {
+    body, p {
         font-size: 16px;
         line-height: 1.6;
     }
     
-    /* 3. Hero Section - Fix Background Attachment on Mobile */
+    /* ==========================================
+       7. HERO & HOME PAGE FIXES
+       ========================================== */
     .hero-section {
-        background-attachment: scroll !important; /* Fixes jitter on iOS */
+        background-attachment: scroll !important;
         background-size: cover;
         background-position: center;
     }
     
     body.home-page {
-        background-attachment: scroll !important; /* Fixes jitter on iOS */
+        background-attachment: scroll !important;
     }
     
-    /* 4. Spacing & Padding - Reduce for Mobile */
-    body {
-        padding-top: 80px; /* Reduced from 100px */
-    }
-    
+    /* ==========================================
+       8. SPACING & PADDING
+       ========================================== */
     .container {
-        padding: 0 20px !important; /* Reduced from 32px */
+        padding: 0 20px !important;
     }
     
     .about-section,
     .products-section,
     .section-products,
     .contact-section {
-        padding: 40px 0 !important; /* Reduced from 120px */
+        padding: 40px 0 !important;
     }
     
     body.home-page .about-content {
-        padding: 30px 20px !important; /* Reduced from 40px */
+        padding: 30px 20px !important;
     }
     
-    /* 5. Navigation Bar - Prevent Overlap */
-    .site-header .container {
-        flex-wrap: wrap;
-        gap: 12px;
-    }
-    
-    .main-nav a,
-    .site-nav a {
-        font-size: 0.85rem; /* Reduced from 0.95rem */
-        padding: 4px 8px;
-    }
-    
-    .main-nav ul {
-        gap: 16px; /* Reduced from 32px */
-    }
-    
-    /* Allow horizontal scroll if needed for very small screens */
-    .main-nav {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-    
-    .main-nav ul {
-        min-width: max-content;
-    }
-    
-    /* 6. Touch Targets - Minimum 44px Height */
+    /* ==========================================
+       9. TOUCH TARGETS & BUTTONS
+       ========================================== */
     .action-btn,
     .btn,
-    .color-btn,
     .submit-btn {
         min-height: 44px;
         padding: 12px 24px;
@@ -844,7 +962,9 @@ body.home-page .action-btn:hover {
         min-height: 44px;
     }
     
-    /* Additional Mobile Optimizations */
+    /* ==========================================
+       10. MODAL & MISC
+       ========================================== */
     .scroll-indicator {
         bottom: 30px;
         right: 30px;
@@ -852,20 +972,12 @@ body.home-page .action-btn:hover {
         height: 32px;
     }
     
-    /* Prevent horizontal scroll */
-    body {
-        overflow-x: hidden;
-        width: 100%;
-    }
-    
-    /* Modal adjustments for mobile */
     .expanded-content {
         width: 95% !important;
         padding: 24px !important;
         gap: 24px !important;
     }
     
-    /* About section text adjustments */
     body.home-page .about-content p {
         font-size: 15px;
         line-height: 1.7;

@@ -71,22 +71,10 @@
     </section>
 
     <!-- Scripts -->
+    <script src="assets/js/main.js"></script>
     <script>
-        // Mobile navigation toggle
+        // Page-specific scripts
         document.addEventListener('DOMContentLoaded', () => {
-            const navToggle = document.querySelector('.nav-toggle');
-            const mainNav = document.querySelector('.main-nav');
-            
-            if (navToggle && mainNav) {
-                navToggle.addEventListener('click', () => {
-                    navToggle.classList.toggle('active');
-                    mainNav.classList.toggle('active');
-                    
-                    const isExpanded = navToggle.classList.contains('active');
-                    navToggle.setAttribute('aria-expanded', isExpanded);
-                });
-            }
-            
             // Scroll indicator click
             const scrollIndicator = document.querySelector('.scroll-indicator');
             if (scrollIndicator) {
@@ -108,19 +96,21 @@
                 });
             }
             
-            // Scroll-triggered fade-in animation for about section (reversible)
+            // Scroll-triggered fade-in animation for about section (reversible with debounce)
             const aboutContent = document.querySelector('.about-content');
             if (aboutContent) {
+                let debounceTimer;
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
-                        // Toggle visible class based on intersection state
-                        if (entry.isIntersecting) {
-                            // Element is intersecting (visible in viewport) - add visible class
-                            entry.target.classList.add('visible');
-                        } else {
-                            // Element is not intersecting (out of viewport) - remove visible class
-                            entry.target.classList.remove('visible');
-                        }
+                        // Debounce to prevent flickering on slow scroll
+                        clearTimeout(debounceTimer);
+                        debounceTimer = setTimeout(() => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('visible');
+                            } else {
+                                entry.target.classList.remove('visible');
+                            }
+                        }, 100); // 100ms debounce
                     });
                 }, {
                     threshold: 0.2 // Trigger when 20% visible

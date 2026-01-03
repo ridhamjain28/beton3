@@ -56,7 +56,7 @@
         
         .technical-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
             gap: 32px;
             margin-top: 48px;
         }
@@ -65,6 +65,9 @@
             position: relative;
             cursor: pointer;
             transition: transform 0.3s ease, opacity 0.3s ease;
+            /* Ensure smooth rendering */
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         }
         
         .technical-item:hover {
@@ -76,6 +79,9 @@
             height: auto;
             display: block;
             border: 1px solid #E0E0E0;
+            /* Prevent flickering */
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         }
         
         .model-number {
@@ -97,7 +103,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0);
-            z-index: 1000;
+            z-index: 2000; /* Modal backdrop layer */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -122,6 +128,8 @@
             gap: 48px;
             padding: 48px;
             overflow: hidden;
+            /* Prevent content from disappearing during animation */
+            will-change: opacity;
         }
         
         .close-btn {
@@ -136,7 +144,7 @@
             line-height: 1;
             cursor: pointer;
             color: #000000;
-            z-index: 1001;
+            z-index: 2001; /* Modal content layer */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -155,12 +163,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            /* Ensure images stay visible during transition */
+            background: transparent;
         }
         
-        .image-container img {
+        .image-container img,
+        .expanded-img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
+            /* Prevent image flickering */
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         }
         
         .product-details {
@@ -201,32 +215,6 @@
             color: #000000;
             margin-bottom: 32px;
             flex-shrink: 1;
-        }
-        
-        .color-controls {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 32px;
-        }
-        
-        .color-btn {
-            padding: 10px 20px;
-            border: 1px solid #E0E0E0;
-            background: #FFFFFF;
-            color: #000000;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .color-btn:hover {
-            border-color: #000000;
-        }
-        
-        .color-btn.active {
-            background: #000000;
-            color: #FFFFFF;
-            border-color: #000000;
         }
         
         .specs-features {
@@ -289,6 +277,8 @@
         .details-panel {
             opacity: 0;
             transform: translateX(20px);
+            /* Smooth transitions */
+            will-change: opacity, transform;
         }
         
         /* Mobile Responsive */
@@ -306,7 +296,7 @@
             }
             
             .technical-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
                 gap: 24px;
             }
         }
@@ -440,13 +430,6 @@
                 <p id="expandedPrice" class="price"></p>
                 <p id="expandedDesc"></p>
                 
-                <!-- Color Temperature Controls -->
-                <div class="color-controls">
-                    <button class="color-btn active" data-temp="3000K">3000K</button>
-                    <button class="color-btn" data-temp="4000K">4000K</button>
-                    <button class="color-btn" data-temp="6000K">6000K</button>
-                </div>
-                
                 <div class="specs-features">
                     <div class="specs-section">
                         <h4>Specifications</h4>
@@ -461,7 +444,7 @@
                             <!-- Features injected via JS -->
                         </ul>
                     </div>
-                </div>
+            </div>
             </div>
         </div>
     </div>
@@ -475,8 +458,10 @@
         // Register GSAP Plugin
         gsap.registerPlugin(Flip);
         
-        // Store reference to clicked thumbnail for return animation
+        // Store references for reparenting animation
         let clickedThumbnail = null;
+        let activeImage = null;
+        let activeCard = null;
         let isClosing = false;
         
         // Product Data - Ceiling Lights Only
@@ -645,7 +630,7 @@
             
             grid.innerHTML = products.map((product, index) => `
                 <div class="technical-item" data-id="${product.id}" data-flip-id="product-${index}">
-                    <img src="${product.images.off}" alt="${product.name}" data-flip-id="product-${index}" loading="lazy">
+                    <img src="${product.images.off}" alt="${product.name}" data-flip-id="product-${index}" loading="lazy" decoding="async">
                     <div class="model-number">${product.id}</div>
                 </div>
             `).join('');
@@ -665,13 +650,11 @@
             const product = products.find(p => p.id === productId);
             if (!product) return;
             
-            // Store reference to clicked thumbnail for reverse animation
+            // Store references for reparenting
             clickedThumbnail = clickedImage;
+            activeImage = clickedImage;
+            activeCard = clickedImage.closest('.technical-item');
             isClosing = false;
-            // Keep grid slot in flow, but invisible (layout stable)
-            clickedThumbnail.style.opacity = '0';
-            clickedThumbnail.style.visibility = 'hidden';
-            clickedThumbnail.style.pointerEvents = 'none';
             
             const expandedView = document.getElementById('expandedView');
             const modalImage = document.getElementById('modalImage');
@@ -683,8 +666,8 @@
             const featuresList = document.getElementById('featuresList');
             const detailsPanel = document.querySelector('.details-panel');
             const expandedContent = document.querySelector('.expanded-content');
-            
-            // Capture the state of the clicked image
+
+            // Capture the state of the clicked image for FLIP
             const state = Flip.getState(clickedImage);
             
             // Update content
@@ -712,9 +695,17 @@
                 featuresList.appendChild(li);
             });
             
-            // Set image source and assign flip-id
-            modalImage.src = product.images.off;
-            modalImage.setAttribute('data-flip-id', clickedImage.getAttribute('data-flip-id'));
+            // Reparent the actual clicked image into the modal image container
+            const imageContainer = document.querySelector('.image-container');
+            if (imageContainer) {
+                // Clear any existing children (including modalImage)
+                while (imageContainer.firstChild) {
+                    imageContainer.removeChild(imageContainer.firstChild);
+                }
+                imageContainer.appendChild(activeImage);
+                activeImage.classList.add('expanded-img');
+                activeImage.setAttribute('data-flip-id', clickedImage.getAttribute('data-flip-id'));
+            }
             
             // Ensure modal container is visible (in case it was hidden during close)
             if (expandedContent) gsap.set(expandedContent, { autoAlpha: 1 });
@@ -731,12 +722,13 @@
                 ease: 'power3.inOut'
             });
             
-            // Execute FLIP animation
+            // Execute FLIP animation on the reparented image
             Flip.from(state, {
-                targets: modalImage,
+                targets: activeImage,
                 duration: 0.6,
                 ease: 'power3.inOut',
                 absolute: true,
+                scale: true, // Smoother scale transitions
                 onComplete: () => {
                     // Fade in text details after image lands
                     gsap.to(detailsPanel, {
@@ -747,31 +739,22 @@
                     });
                 }
             });
-            
-            // Set up color temperature controls
-            document.querySelectorAll('.color-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    const temp = this.getAttribute('data-temp');
-                    // Color temperature functionality can be added here
-                    console.log(`Color temperature changed to ${temp}`);
-                });
-            });
         }
         
-        // Function to close expanded view with a true "return to slot" animation
+        // Function to close expanded view with reparenting FLIP
         function closeExpandedView() {
             const expandedView = document.getElementById('expandedView');
-            const modalImage = document.getElementById('modalImage');
             const detailsPanel = document.querySelector('.details-panel');
+            const expandedContent = document.querySelector('.expanded-content');
 
             if (isClosing) return;
             isClosing = true;
 
-            // If we don't know where to return, do a simple close (no jump risk)
-            if (!clickedThumbnail) {
+            // Kill any running animations to prevent race conditions
+            gsap.killTweensOf([expandedView, detailsPanel, activeImage, expandedContent]);
+
+            // If we don't know where to return, do a simple close
+            if (!activeImage || !activeCard) {
                 gsap.to(expandedView, {
                     backgroundColor: 'rgba(0, 0, 0, 0)',
                     duration: 0.25,
@@ -785,101 +768,64 @@
                 return;
             }
 
-            const expandedContent = document.querySelector('.expanded-content');
-            // Keep modal z-index high through the entire flight
-            expandedView.style.zIndex = '999';
-            // Hide the live modal image to prevent double-visibility during the flight
-            modalImage.style.visibility = 'hidden';
+            // Keep modal visible during animation
+            expandedView.style.zIndex = '2000';
+            gsap.set(expandedContent, { autoAlpha: 1 });
 
             // 1) Fade out the text panel quickly
             gsap.to(detailsPanel, {
                 autoAlpha: 0,
                 x: 20,
-                duration: 0.18,
+                duration: 0.2,
                 ease: 'power2.in'
             });
 
-            // 2) Compute exact rects (First/Last)
-            const fromRect = modalImage.getBoundingClientRect();
-            const toRect = clickedThumbnail.getBoundingClientRect();
+            // 2) Capture the state of the active image in expanded state
+            const state = Flip.getState(activeImage);
 
-            // 3) Create a "flying" element that animates from modal -> grid slot using inverse-scale FLIP
-            const flying = modalImage.cloneNode(true);
-            flying.removeAttribute('id');
-            flying.style.position = 'fixed';
-            flying.style.top = `${toRect.top}px`;
-            flying.style.left = `${toRect.left}px`;
-            flying.style.width = `${toRect.width}px`;
-            flying.style.height = `${toRect.height}px`;
-            flying.style.margin = '0';
-            flying.style.zIndex = '2000';
-            flying.style.pointerEvents = 'none';
-            flying.style.objectFit = 'contain';
-            flying.style.background = '#FFFFFF';
-            flying.style.transformOrigin = 'top left';
+            // 3) Move the image back into its original card slot (reparent)
+            if (activeCard && activeImage) {
+                activeCard.insertBefore(activeImage, activeCard.firstChild);
+                activeImage.classList.remove('expanded-img');
+            }
 
-            // Compute inverse transform from modal rect to target rect
-            const scaleX = fromRect.width / toRect.width;
-            const scaleY = fromRect.height / toRect.height;
-            const translateX = fromRect.left - toRect.left;
-            const translateY = fromRect.top - toRect.top;
+            // 4) Ensure the card is visible for the animation target
+            if (activeCard) {
+                gsap.set(activeCard, { autoAlpha: 1 });
+            }
 
-            gsap.set(flying, {
-                transform: `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`
-            });
-
-            document.body.appendChild(flying);
-
-            // Prevent interactions during the close flight
-            expandedView.style.pointerEvents = 'none';
-
-            // 4) Hide the modal content while the image flies (avoids layout reflow flicker)
-            if (expandedContent) gsap.to(expandedContent, { autoAlpha: 0, duration: 0.12, ease: 'power1.out' });
-
-            // 5) Animate backdrop fade-out in parallel
+            // 5) Animate backdrop fade-out
             gsap.to(expandedView, {
                 backgroundColor: 'rgba(0, 0, 0, 0)',
-                duration: 0.55,
+                duration: 0.6,
                 ease: 'power3.inOut'
             });
 
-            // 6) Animate the flying element with inverse-scale back to identity (target slot)
-            const tl = gsap.timeline({
-                defaults: { duration: 0.55, ease: 'power3.inOut' }
+            // 6) Run FLIP animation back to grid slot
+            Flip.from(state, {
+                targets: activeImage,
+                duration: 0.6,
+                ease: 'power3.inOut',
+                absolute: true,
+                scale: true,
+                onComplete: () => {
+                    // Cleanup + reset - IMPORTANT: delay this slightly to prevent white flash
+                    gsap.delayedCall(0.05, () => {
+                        expandedView.classList.remove('active');
+                        expandedView.style.pointerEvents = 'none';
+                        expandedView.style.zIndex = '';
+                        gsap.set(expandedContent, { autoAlpha: 1 });
+                        document.body.style.overflow = '';
+                        activeImage = null;
+                        activeCard = null;
+                        clickedThumbnail = null;
+                        isClosing = false;
+                    });
+                },
+                onInterrupt: () => {
+                    isClosing = false;
+                }
             });
-
-            tl.to(flying, {
-                transform: 'translate(0px, 0px) scale(1, 1)'
-            });
-
-            // Safety: wait for transition end via GSAP onComplete + timeout
-            const cleanup = () => {
-                // Restore grid thumbnail
-                clickedThumbnail.style.opacity = '1';
-                clickedThumbnail.style.visibility = 'visible';
-                clickedThumbnail.style.pointerEvents = '';
-
-                // Cleanup + reset
-                flying.remove();
-                if (expandedContent) gsap.set(expandedContent, { autoAlpha: 1 });
-                modalImage.style.visibility = 'visible';
-                expandedView.classList.remove('active');
-                expandedView.style.pointerEvents = '';
-                expandedView.style.zIndex = '';
-                document.body.style.overflow = '';
-                clickedThumbnail = null;
-                isClosing = false;
-            };
-
-            tl.eventCallback('onComplete', () => {
-                // Wait a tiny frame to ensure no snap
-                setTimeout(cleanup, 30);
-            });
-
-            // Fallback safety timeout
-            setTimeout(() => {
-                if (isClosing) cleanup();
-            }, 700);
         }
         
         // Initialize when DOM is loaded
@@ -906,20 +852,10 @@
                 }
             });
             
-            // Mobile navigation toggle
-            const navToggle = document.querySelector('.nav-toggle');
-            const mainNav = document.querySelector('.main-nav');
-            
-            if (navToggle && mainNav) {
-                navToggle.addEventListener('click', () => {
-                    navToggle.classList.toggle('active');
-                    mainNav.classList.toggle('active');
-                    
-                    const isExpanded = navToggle.classList.contains('active');
-                    navToggle.setAttribute('aria-expanded', isExpanded);
-                });
-            }
         });
     </script>
+    
+    <!-- Global Scripts -->
+    <script src="assets/js/main.js"></script>
 </body>
 </html>

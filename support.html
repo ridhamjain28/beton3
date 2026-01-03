@@ -212,7 +212,7 @@
                         
                         <div class="form-group">
                             <label for="number">Number</label>
-                            <input type="tel" id="number" name="number" required>
+                            <input type="tel" id="number" name="number" pattern="[0-9+\s\-()]+" title="Please enter a valid phone number" required>
                         </div>
                         
                         <div class="form-group">
@@ -239,34 +239,29 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
     <!-- Scripts -->
+    <script src="assets/js/main.js"></script>
     <script>
-        // Mobile navigation toggle
+        // Page-specific scripts
         document.addEventListener('DOMContentLoaded', () => {
-            const navToggle = document.querySelector('.nav-toggle');
-            const mainNav = document.querySelector('.main-nav');
-            
-            if (navToggle && mainNav) {
-                navToggle.addEventListener('click', () => {
-                    navToggle.classList.toggle('active');
-                    mainNav.classList.toggle('active');
-                    
-                    const isExpanded = navToggle.classList.contains('active');
-                    navToggle.setAttribute('aria-expanded', isExpanded);
-                });
+            // Initialize Map with error handling
+            try {
+                const map = L.map('map').setView([21.1234, 73.1123], 15);
+                
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors',
+                    maxZoom: 19,
+                    errorTileUrl: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' // Transparent fallback
+                }).addTo(map);
+                
+                // Add marker for address
+                L.marker([21.1234, 73.1123])
+                    .addTo(map)
+                    .bindPopup('12, Kashyap Chambers, Station Road, Bardoli - 394601, Dist. Surat.')
+                    .openPopup();
+            } catch (err) {
+                console.warn('Map failed to load:', err);
+                document.getElementById('map').innerHTML = '<p style="padding: 20px; text-align: center; color: #555;">Map unavailable</p>';
             }
-            
-            // Initialize Map
-            const map = L.map('map').setView([21.1234, 73.1123], 15);
-            
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(map);
-            
-            // Add marker for address
-            L.marker([21.1234, 73.1123])
-                .addTo(map)
-                .bindPopup('12, Kashyap Chambers, Station Road, Bardoli - 394601, Dist. Surat.')
-                .openPopup();
 
             // Contact form AJAX submit (stay on page)
             const form = document.getElementById('contactForm');
