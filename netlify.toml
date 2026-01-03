@@ -1,0 +1,15 @@
+[build]
+  # This tells Netlify your index.html is in the root folder
+  publish = "."
+  
+  # This tells Netlify there is no build command (no npm run build needed)
+  command = ""
+
+[[headers]]
+  # Basic security and caching headers for performance
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
