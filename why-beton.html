@@ -44,6 +44,9 @@
         This file controls ALL the visual styling (colors, fonts, spacing, etc.)
     -->
     <link rel="stylesheet" href="assets/css/style.css">
+    
+    <!-- Netlify Identity Widget (for Decap CMS authentication) -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 
 <!-- 
@@ -247,6 +250,19 @@
                 observer.observe(aboutContent);
             }
         });
+    </script>
+    
+    <!-- Netlify Identity Redirect (for Decap CMS login) -->
+    <script>
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        document.location.href = "/admin/";
+                    });
+                }
+            });
+        }
     </script>
 </body>
 </html>
