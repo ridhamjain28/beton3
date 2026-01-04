@@ -1,28 +1,49 @@
 <!DOCTYPE html>
+<!-- 
+    =============================================
+    SPECIFICATIONS.HTML - TECHNICAL SPECS PAGE
+    =============================================
+    This page explains technical lighting concepts to customers.
+    It displays:
+    - Technical terms with explanations (CRI, CCT, UGR, etc.)
+    - Diagrams/images next to some explanations
+    - Multiple sections organized by topic
+    
+    Layout: Each spec item is a 2-column grid (text + image)
+    Items without images span the full width.
+-->
 <html lang="en">
 <head>
+    <!-- Standard meta tags - same as index.html -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Specifications | Beton</title>
     <meta name="description" content="Technical specifications and performance concepts for Beton lighting systems.">
     
-    <!-- Fonts: Inter -->
+    <!-- Google Fonts - Inter font family -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
-    <!-- Styles -->
+    <!-- Main stylesheet -->
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
-    <!-- Navigation -->
+    <!-- 
+        =========================================
+        NAVIGATION HEADER
+        =========================================
+        Same header as all other pages for consistency.
+        Notice class="active" is on SPECIFICATIONS link.
+    -->
     <header class="site-header">
         <div class="container">
             <a href="index.html" class="brand-logo">
                 <img src="Beton Logo.jpg" alt="Beton" class="logo-img">
             </a>
             
+            <!-- Hamburger menu for mobile -->
             <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
                 <span></span>
                 <span></span>
@@ -33,6 +54,7 @@
                 <ul>
                     <li><a href="index.html">HOME</a></li>
                     <li><a href="products.html">PRODUCTS</a></li>
+                    <!-- class="active" highlights current page in menu -->
                     <li><a href="specifications.html" class="active">SPECIFICATIONS</a></li>
                     <li><a href="support.html">CONTACT</a></li>
                 </ul>
@@ -40,21 +62,51 @@
         </div>
     </header>
 
-    <!-- Specifications -->
+    <!-- 
+        =========================================
+        MAIN CONTENT - SPECIFICATIONS
+        =========================================
+        <section> groups related content together.
+        class="section-products" applies consistent styling.
+    -->
     <section class="section-products">
         <div class="container">
+            
+            <!-- 
+                SECTION HEADER
+                The title for the first group of specifications.
+                <h2> is a second-level heading (h1 is page title).
+            -->
             <div class="section-header">
                 <h2>COLOUR CHARACTERISATION</h2>
             </div>
             
+            <!-- 
+                =========================================
+                SPEC GRID
+                =========================================
+                This is a CSS Grid container that holds all the spec items.
+                Items are arranged in rows automatically.
+            -->
             <div class="spec-grid">
-                <!-- Row 1: Colour Fidelity -->
+                
+                <!-- 
+                    SPEC ITEM WITH IMAGE
+                    class="has-image" tells CSS this item has 2 columns.
+                    Structure: spec-text (left) + spec-media (right)
+                -->
                 <div class="spec-item has-image">
+                    <!-- Text content on the left -->
                     <div class="spec-text">
                         <h3>Colour Rendering Index (CRI)</h3>
                         <p>CRI measures the ability of a light source to reveal colours faithfully compared to a reference illuminant. High CRI values are critical for material-rich environments where surface perception impacts spatial quality.</p>
                     </div>
+                    <!-- Image on the right -->
                     <div class="spec-media">
+                        <!-- 
+                            loading="lazy" = image only loads when scrolled into view
+                            This improves page load speed.
+                        -->
                         <img class="spec-diagram" src="cri.png" alt="CRI Comparison" loading="lazy">
                     </div>
                 </div>
@@ -69,7 +121,6 @@
                     </div>
                 </div>
 
-                <!-- Row 2: Characterisation -->
                 <div class="spec-item has-image">
                     <div class="spec-text">
                         <h3>Correlated Colour Temperature (CCT)</h3>
@@ -83,6 +134,7 @@
                 <div class="spec-item has-image">
                     <div class="spec-text">
                         <h3>Chromatic Stability (MacAdam)</h3>
+                        <!-- &lt; displays as < symbol (HTML entity) -->
                         <p>MacAdam ellipses define the consistency between individual LED chips. Tight step tolerances (SDCM &lt; 3) prevent visible colour shifts in linear arrays or wall-washing applications.</p>
                     </div>
                     <div class="spec-media">
@@ -90,7 +142,6 @@
                     </div>
                 </div>
 
-                <!-- Row 3: Visual Comfort & Control -->
                 <div class="spec-item has-image">
                     <div class="spec-text">
                         <h3>Unified Glare Rating (UGR)</h3>
@@ -101,6 +152,11 @@
                     </div>
                 </div>
 
+                <!-- 
+                    SPEC ITEM WITHOUT IMAGE
+                    class="no-image" makes it span full width (1 column layout).
+                    Used when there's no diagram to show.
+                -->
                 <div class="spec-item no-image">
                     <div class="spec-text">
                         <h3>Tunable White Control</h3>
@@ -108,7 +164,6 @@
                     </div>
                 </div>
 
-                <!-- Row 4: Lifetime -->
                 <div class="spec-item no-image">
                     <div class="spec-text">
                         <h3>Lifetime Colour Performance</h3>
@@ -117,13 +172,20 @@
                 </div>
             </div>
 
-            <!-- Lighting Performance Section -->
+            <!-- 
+                =========================================
+                SECOND SECTION - Lighting Performance
+                =========================================
+                style="margin-top: 120px;" adds space above this section.
+                Inline styles override CSS (but CSS is preferred).
+            -->
             <div class="section-header" style="margin-top: 120px;">
                 <h2>Lighting Performance & Control</h2>
                 <p>Lighting quality is influenced by optical design, thermal stability, and component consistency. Beton fixtures are specified using defined performance parameters to support reliable output, visual comfort, and long-term stability.</p>
             </div>
 
             <div class="spec-grid">
+                <!-- All these items have no images, so they're text-only -->
                 <div class="spec-item no-image">
                     <div class="spec-text">
                         <h3>Luminous Flux (lm)</h3>
@@ -150,7 +212,11 @@
                 </div>
             </div>
 
-            <!-- Control & Dimming Section -->
+            <!-- 
+                =========================================
+                THIRD SECTION - Control & Dimming
+                =========================================
+            -->
             <div class="section-header" style="margin-top: 120px;">
                 <h2>Control & Dimming Options</h2>
                 <p>Lighting control influences visual comfort, energy use, and adaptability over time. Beton fixtures are designed to integrate reliably with commonly used control systems, with compatibility defined clearly at the product level.</p>
@@ -187,26 +253,45 @@
         </div>
     </section>
 
-    <!-- Scripts -->
+    <!-- 
+        =========================================
+        JAVASCRIPT
+        =========================================
+    -->
+    
+    <!-- Shared navigation script -->
     <script src="assets/js/main.js"></script>
+    
+    <!-- Page-specific script for handling missing images -->
     <script>
-        // Page-specific scripts
         document.addEventListener('DOMContentLoaded', () => {
-            // Check if images exist and hide if they don't
+            // ========================================
+            // IMAGE ERROR HANDLING
+            // ========================================
+            // If an image file doesn't exist, hide it instead of
+            // showing a broken image icon.
+            
+            // Find all images inside spec-item containers
             const specImages = document.querySelectorAll('.spec-item img');
+            
             specImages.forEach(img => {
+                // Create a test image to check if the file exists
                 const testImage = new Image();
+                
+                // If image loads successfully, show it
                 testImage.onload = function() {
-                    // Image exists, keep it visible
                     img.style.display = 'block';
                 };
+                
+                // If image fails to load (404 error), hide it
                 testImage.onerror = function() {
-                    // Image doesn't exist, hide it
                     img.style.display = 'none';
                 };
+                
+                // Start loading the test image
                 testImage.src = img.src;
                 
-                // Also add onerror handler as fallback
+                // Also add direct error handler as a backup
                 img.onerror = function() {
                     this.style.display = 'none';
                 };

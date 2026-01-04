@@ -1,59 +1,97 @@
 <!DOCTYPE html>
+<!-- 
+    =============================================
+    SUPPORT.HTML - CONTACT PAGE
+    =============================================
+    This page allows customers to contact you.
+    It displays:
+    - Your contact information (phone, address, hours)
+    - An interactive map showing your location
+    - A contact form that sends messages to your email
+    
+    Layout: Two columns on desktop, stacked on mobile.
+    Left column = contact info + map
+    Right column = contact form
+-->
 <html lang="en">
 <head>
+    <!-- Standard meta tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Support | Beton</title>
     <meta name="description" content="Technical support, documentation, and warranty information for Beton products.">
     
-    <!-- Fonts: Inter -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
-    <!-- Leaflet CSS -->
+    <!-- 
+        Leaflet CSS - Required for the interactive map
+        Leaflet is a free, open-source map library
+    -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
-    <!-- Styles -->
+    <!-- Main stylesheet -->
     <link rel="stylesheet" href="assets/css/style.css">
     
+    <!-- 
+        =========================================
+        PAGE-SPECIFIC STYLES
+        =========================================
+        These styles ONLY apply to this contact page.
+        They're written here instead of style.css because
+        they're not used anywhere else.
+    -->
     <style>
+        /* Main contact section - adds vertical padding */
         .contact-section {
             padding: 120px 0;
-            min-height: 80vh;
+            min-height: 80vh;  /* At least 80% of screen height */
         }
         
+        /* 
+            CONTACT LAYOUT - Two column grid
+            grid-template-columns: 1fr 1fr = two equal columns
+            gap: 64px = space between columns
+        */
         .contact-layout {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 64px;
-            align-items: start;
+            align-items: start;  /* Align items to top */
         }
         
+        /* Section headings */
         .contact-info h2,
         .contact-form-wrapper h2 {
+            /* clamp(min, preferred, max) = responsive font size */
             font-size: clamp(1.75rem, 3vw, 2.5rem);
             margin-bottom: 32px;
             color: #111111;
         }
         
+        /* Contact details wrapper */
         .contact-details {
             margin-bottom: 48px;
         }
         
+        /* Each contact item (phone, address, hours) */
         .contact-item {
             margin-bottom: 32px;
         }
         
+        /* Contact item labels (PHONE, ADDRESS, etc.) */
         .contact-item h3 {
             font-size: 1rem;
             font-weight: 600;
             margin-bottom: 8px;
             color: #111111;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            text-transform: uppercase;  /* MAKES TEXT ALL CAPS */
+            letter-spacing: 0.05em;     /* Slight spacing between letters */
         }
         
+        /* Contact item text (phone numbers, address text) */
         .contact-item p {
             font-size: 1rem;
             color: #555555;
@@ -61,14 +99,19 @@
             margin-bottom: 4px;
         }
         
+        /* Map container */
         .contact-map {
             height: 400px;
             width: 100%;
             border: 1px solid #E0E0E0;
             border-radius: 4px;
-            overflow: hidden;
+            overflow: hidden;  /* Clips map to rounded corners */
         }
         
+        /* 
+            CONTACT FORM WRAPPER
+            White card containing the form
+        */
         .contact-form-wrapper {
             background: #FFFFFF;
             padding: 48px;
@@ -76,41 +119,47 @@
             border-radius: 4px;
         }
         
+        /* Each form field group (label + input) */
         .form-group {
             margin-bottom: 24px;
         }
         
+        /* Form labels */
         .form-group label {
-            display: block;
+            display: block;      /* Makes label take full width */
             font-size: 0.9rem;
             font-weight: 500;
             margin-bottom: 8px;
             color: #111111;
         }
         
+        /* Form inputs and textarea */
         .form-group input,
         .form-group textarea {
-            width: 100%;
+            width: 100%;         /* Full width of container */
             padding: 12px 16px;
             font-size: 1rem;
-            font-family: var(--font-family);
+            font-family: var(--font-family);  /* Uses Inter font */
             border: 1px solid #E0E0E0;
             border-radius: 4px;
             background: #FFFFFF;
             color: #111111;
-            transition: border-color 0.2s ease;
+            transition: border-color 0.2s ease;  /* Smooth border animation */
         }
         
+        /* Input focus state - when user clicks/types in field */
         .form-group input:focus,
         .form-group textarea:focus {
-            outline: none;
-            border-color: #1E1E1E;
+            outline: none;              /* Removes default blue outline */
+            border-color: #1E1E1E;      /* Dark border when focused */
         }
         
+        /* Textarea can be resized vertically only */
         .form-group textarea {
             resize: vertical;
         }
         
+        /* Submit button */
         .submit-btn {
             width: 100%;
             padding: 16px 32px;
@@ -120,19 +169,28 @@
             background: #1E1E1E;
             border: 1px solid #1E1E1E;
             border-radius: 4px;
-            cursor: pointer;
+            cursor: pointer;  /* Hand cursor on hover */
             transition: all 0.3s ease;
             letter-spacing: 0.02em;
         }
         
+        /* Button hover effect - slightly darker */
         .submit-btn:hover {
             background: #000000;
             border-color: #000000;
         }
         
+        /* 
+            =========================================
+            RESPONSIVE STYLES (Media Queries)
+            =========================================
+            These change the layout for different screen sizes.
+        */
+        
+        /* TABLET: Screen width 968px and below */
         @media (max-width: 968px) {
             .contact-layout {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr;  /* Single column */
                 gap: 48px;
             }
             
@@ -141,14 +199,14 @@
             }
         }
         
-        /* MOBILE: Compact contact layout */
+        /* MOBILE: Screen width 768px and below */
         @media (max-width: 768px) {
             .contact-layout {
                 gap: 32px;
             }
             
             .contact-map {
-                height: 250px;
+                height: 250px;  /* Shorter map on mobile */
             }
             
             .contact-form-wrapper {
@@ -174,7 +232,7 @@
             }
         }
         
-        /* SMALL MOBILE: Extra compact contact */
+        /* SMALL MOBILE: Screen width 480px and below */
         @media (max-width: 480px) {
             .contact-layout {
                 gap: 24px;
@@ -185,7 +243,7 @@
             }
             
             .contact-map {
-                height: 200px;
+                height: 200px;  /* Even shorter on small phones */
             }
             
             .form-group {
@@ -209,7 +267,12 @@
 </head>
 <body>
 
-    <!-- Navigation -->
+    <!-- 
+        =========================================
+        NAVIGATION HEADER
+        =========================================
+        Same as other pages. CONTACT link has class="active".
+    -->
     <header class="site-header">
         <div class="container">
             <a href="index.html" class="brand-logo">
@@ -233,26 +296,41 @@
         </div>
     </header>
 
-    <!-- Contact Section -->
+    <!-- 
+        =========================================
+        CONTACT SECTION
+        =========================================
+        Main content area with two columns.
+    -->
     <section class="contact-section">
         <div class="container">
             <div class="contact-layout">
-                <!-- Left Column: Contact Info -->
+                
+                <!-- 
+                    =====================================
+                    LEFT COLUMN: Contact Information
+                    =====================================
+                -->
                 <div class="contact-info">
                     <h2>Get in Touch</h2>
                     
+                    <!-- Contact details -->
                     <div class="contact-details">
+                        <!-- Phone numbers -->
                         <div class="contact-item">
                             <h3>Phone</h3>
                             <p>+91 99099 12897</p>
                             <p>+91 98988 45091</p>
                         </div>
                         
+                        <!-- Physical address -->
                         <div class="contact-item">
                             <h3>Address</h3>
+                            <!-- <br> creates a line break within the paragraph -->
                             <p>12, Kashyap Chambers, Station Road,<br>Bardoli - 394601, Dist. Surat.</p>
                         </div>
                         
+                        <!-- Business hours -->
                         <div class="contact-item">
                             <h3>Timings</h3>
                             <p>Mon - Sat: 9:30 AM to 8:00 PM</p>
@@ -260,31 +338,71 @@
                         </div>
                     </div>
                     
-                    <!-- Map -->
+                    <!-- 
+                        INTERACTIVE MAP
+                        id="map" is used by JavaScript to put the map here.
+                        The actual map is created by Leaflet.js (see script below).
+                    -->
                     <div id="map" class="contact-map"></div>
                 </div>
                 
-                <!-- Right Column: Contact Form -->
+                <!-- 
+                    =====================================
+                    RIGHT COLUMN: Contact Form
+                    =====================================
+                    This form sends messages to your email via Web3Forms.
+                -->
                 <div class="contact-form-wrapper">
                     <h2>Send us a Message</h2>
+                    
+                    <!-- 
+                        FORM ELEMENT
+                        id="contactForm" = used by JavaScript to handle submission
+                        action = where the form data is sent
+                        method="POST" = how data is sent (POST = in request body)
+                    -->
                     <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                        <!-- 
+                            HIDDEN FIELD - Web3Forms API Key
+                            This tells Web3Forms which account to send emails to.
+                            The user never sees this field.
+                        -->
                         <input type="hidden" name="access_key" value="2d7c030f-aa6f-4fc4-a548-d8b13990b5e0">
                         
+                        <!-- Name field -->
                         <div class="form-group">
                             <label for="name">Name</label>
+                            <!-- 
+                                type="text" = regular text input
+                                id="name" = connects to the label's "for" attribute
+                                name="name" = key used when sending data
+                                required = must be filled out to submit
+                            -->
                             <input type="text" id="name" name="name" required>
                         </div>
                         
+                        <!-- Phone number field -->
                         <div class="form-group">
                             <label for="number">Number</label>
+                            <!-- 
+                                type="tel" = phone number input (shows number keyboard on mobile)
+                                pattern = only allows certain characters (numbers, +, spaces, -, parentheses)
+                                title = message shown if validation fails
+                            -->
                             <input type="tel" id="number" name="number" pattern="[0-9+\s\-()]+" title="Please enter a valid phone number" required>
                         </div>
                         
+                        <!-- Message field -->
                         <div class="form-group">
                             <label for="message">Message</label>
+                            <!-- 
+                                <textarea> = multi-line text input
+                                rows="6" = height of the textarea (6 lines)
+                            -->
                             <textarea id="message" name="message" rows="6" required></textarea>
                         </div>
                         
+                        <!-- Submit button -->
                         <button type="submit" class="submit-btn">Send Message</button>
                     </form>
                 </div>
@@ -292,77 +410,122 @@
         </div>
     </section>
 
-    <!-- Toast Notification -->
+    <!-- 
+        =========================================
+        TOAST NOTIFICATION
+        =========================================
+        This is the small popup that appears at the bottom-right
+        when a message is sent successfully (or fails).
+        
+        It's hidden by default and shown by JavaScript.
+        role="status" and aria-live help screen readers announce it.
+    -->
     <div id="toastNotification" class="toast-notification" role="status" aria-live="polite" aria-atomic="true">
         <div class="toast-notification__content">
             <span id="toastMessage">Message submitted successfully.</span>
+            <!-- Close button (×) to dismiss the toast -->
             <button type="button" class="toast-notification__close" aria-label="Close notification">×</button>
         </div>
     </div>
 
-    <!-- Leaflet JS -->
+    <!-- 
+        =========================================
+        JAVASCRIPT SECTION
+        =========================================
+    -->
+    
+    <!-- Leaflet.js - Library for the interactive map -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
-    <!-- Scripts -->
+    <!-- Shared navigation script -->
     <script src="assets/js/main.js"></script>
+    
+    <!-- Page-specific scripts -->
     <script>
-        // Page-specific scripts
         document.addEventListener('DOMContentLoaded', () => {
-            // Initialize Map with error handling
+            
+            // ========================================
+            // INTERACTIVE MAP SETUP
+            // ========================================
+            // Uses Leaflet.js to create an OpenStreetMap map
+            
             try {
+                // Create map centered on your address coordinates
+                // [latitude, longitude], zoom level (15 = close up)
                 const map = L.map('map').setView([21.1234, 73.1123], 15);
                 
+                // Add map tiles (the actual map images) from OpenStreetMap
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '© OpenStreetMap contributors',
                     maxZoom: 19,
-                    errorTileUrl: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' // Transparent fallback
+                    // Transparent fallback if tiles fail to load
+                    errorTileUrl: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
                 }).addTo(map);
                 
-                // Add marker for address
+                // Add a marker pin at your location
                 L.marker([21.1234, 73.1123])
                     .addTo(map)
                     .bindPopup('12, Kashyap Chambers, Station Road, Bardoli - 394601, Dist. Surat.')
-                    .openPopup();
+                    .openPopup();  // Show the popup by default
+                    
             } catch (err) {
+                // If map fails to load, show a message instead
                 console.warn('Map failed to load:', err);
                 document.getElementById('map').innerHTML = '<p style="padding: 20px; text-align: center; color: #555;">Map unavailable</p>';
             }
 
-            // Contact form AJAX submit (stay on page)
+            // ========================================
+            // CONTACT FORM AJAX SUBMISSION
+            // ========================================
+            // This makes the form submit WITHOUT reloading the page.
+            // Instead of going to Web3Forms' success page, the user
+            // stays on your site and sees a toast notification.
+            
+            // Get references to form and toast elements
             const form = document.getElementById('contactForm');
             const toast = document.getElementById('toastNotification');
             const toastMessage = document.getElementById('toastMessage');
             const toastClose = toast?.querySelector('.toast-notification__close');
 
-            let toastTimer = null;
+            let toastTimer = null;  // Stores the auto-hide timer
 
+            // Function to hide the toast notification
             function hideToast() {
                 if (!toast) return;
                 toast.classList.remove('is-visible');
+                // Clear the auto-hide timer if it exists
                 if (toastTimer) {
                     clearTimeout(toastTimer);
                     toastTimer = null;
                 }
             }
 
+            // Function to show the toast notification
             function showToast(message) {
                 if (!toast) return;
+                // Update the message text
                 if (toastMessage) toastMessage.textContent = message;
+                // Show the toast
                 toast.classList.add('is-visible');
 
+                // Auto-hide after 15 seconds
                 if (toastTimer) clearTimeout(toastTimer);
                 toastTimer = setTimeout(() => hideToast(), 15000);
             }
 
+            // Close button click handler
             if (toastClose) {
                 toastClose.addEventListener('click', () => hideToast());
             }
 
+            // Form submission handler
             if (form) {
                 form.addEventListener('submit', async (e) => {
+                    // Prevent default form submission (which would reload the page)
                     e.preventDefault();
 
-                    const submitBtn = form.querySelector('button[type=\"submit\"]');
+                    // Disable submit button and show loading state
+                    const submitBtn = form.querySelector('button[type="submit"]');
                     const prevBtnText = submitBtn ? submitBtn.textContent : null;
                     if (submitBtn) {
                         submitBtn.disabled = true;
@@ -370,7 +533,10 @@
                     }
 
                     try {
+                        // Collect form data
                         const formData = new FormData(form);
+                        
+                        // Send data to Web3Forms using fetch API
                         const res = await fetch('https://api.web3forms.com/submit', {
                             method: 'POST',
                             headers: {
@@ -379,15 +545,18 @@
                             body: formData
                         });
 
+                        // Check if submission was successful
                         if (res.ok) {
-                            form.reset();
+                            form.reset();  // Clear all form fields
                             showToast('Message submitted successfully.');
                         } else {
                             showToast('Message failed to send. Please try again.');
                         }
                     } catch (err) {
+                        // Network error or other failure
                         showToast('Message failed to send. Please try again.');
                     } finally {
+                        // Re-enable submit button regardless of success/failure
                         if (submitBtn) {
                             submitBtn.disabled = false;
                             submitBtn.textContent = prevBtnText || 'Send Message';

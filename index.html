@@ -1,34 +1,100 @@
 <!DOCTYPE html>
+<!-- 
+    =============================================
+    INDEX.HTML - HOME PAGE
+    =============================================
+    This is the main landing page of the Beton website.
+    It shows:
+    - A full-screen hero with the tagline "Lighting Beyond Eternity"
+    - A background image that stays fixed while you scroll
+    - An about section with company information
+    - Navigation buttons to other pages
+-->
 <html lang="en">
 <head>
+    <!-- 
+        =========================================
+        HEAD SECTION - Invisible but Important!
+        =========================================
+        This section contains metadata (info about the page)
+        that browsers and search engines use. Users don't see this.
+    -->
+    
+    <!-- Character encoding - tells browser to use standard text characters -->
     <meta charset="UTF-8">
+    
+    <!-- Viewport - makes the website responsive on mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Title - appears in browser tab and search results -->
     <title>Beton | Engineered Lighting Systems</title>
+    
+    <!-- Description - shows in Google search results under the title -->
     <meta name="description" content="Premium, engineering-led lighting brand focused on performance, reliability, and clear specification. Based in India, engineered for the world.">
     
-    <!-- Fonts: Inter -->
+    <!-- 
+        Font Loading - loads the "Inter" font from Google
+        preconnect speeds up the connection to Google's servers
+    -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
-    <!-- Styles -->
+    <!-- 
+        Stylesheet - links to our main CSS file
+        This file controls ALL the visual styling (colors, fonts, spacing, etc.)
+    -->
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
+<!-- 
+    =========================================
+    BODY - Everything Visible on the Page
+    =========================================
+    class="home-page" is special - it tells the CSS to apply
+    the fixed background image ONLY on this page
+-->
 <body class="home-page">
 
-    <!-- Navigation -->
+    <!-- 
+        =========================================
+        HEADER / NAVIGATION BAR
+        =========================================
+        This is the white bar at the top with the logo and menu.
+        It stays "fixed" at the top even when you scroll.
+    -->
     <header class="site-header">
+        <!-- Container keeps content centered with max-width -->
         <div class="container">
+            
+            <!-- 
+                LOGO - clicking it goes to home page
+                <a> is a link, href="index.html" is the destination
+            -->
             <a href="index.html" class="brand-logo">
                 <img src="Beton Logo.jpg" alt="Beton" class="logo-img">
             </a>
             
+            <!-- 
+                HAMBURGER MENU BUTTON (Mobile Only)
+                This creates the 3 horizontal lines (☰) you tap on phones.
+                On desktop, it's hidden. Each <span> is one line.
+                aria-label helps screen readers for accessibility.
+            -->
             <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
             
+            <!-- 
+                NAVIGATION MENU
+                <nav> = navigation section
+                <ul> = unordered list (the menu)
+                <li> = list item (each menu item)
+                <a> = link to another page
+                class="active" highlights the current page
+            -->
             <nav class="main-nav">
                 <ul>
                     <li><a href="index.html" class="active">HOME</a></li>
@@ -40,11 +106,25 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- 
+        =========================================
+        HERO SECTION
+        =========================================
+        This is the full-screen opening section you see first.
+        It takes up 100% of the screen height (100vh).
+        The background image is set in CSS (style.css).
+    -->
     <section class="hero-section">
         <div class="hero-content">
+            <!-- The main headline - big centered text -->
             <h1 class="hero-text">Lighting Beyond Eternity.</h1>
         </div>
+        
+        <!-- 
+            SCROLL INDICATOR - the down arrow in the corner
+            <svg> is a vector graphic (doesn't get blurry when scaled)
+            Clicking this smoothly scrolls to the About section
+        -->
         <div class="scroll-indicator">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 5v14M19 12l-7 7-7-7"/>
@@ -52,16 +132,32 @@
         </div>
     </section>
 
-    <!-- About Section -->
+    <!-- 
+        =========================================
+        ABOUT SECTION
+        =========================================
+        This section appears when you scroll down.
+        It has a semi-transparent dark overlay for readability.
+        The text fades in when it enters the viewport.
+    -->
     <section class="about-section">
         <div class="container">
             <div class="about-content">
+                <!-- 
+                    <p> = paragraph
+                    Each <p> creates a new paragraph with spacing
+                -->
                 <p>Beton develops indoor lighting fixtures engineered for precision, consistency, and long-term reliability. The collection is designed to support clear specification, predictable installation, and stable performance across interior environments.</p>
                 
                 <p>Rather than relying on visual appeal alone, Beton focuses on measurable performance—controlled optics, managed glare, and defined colour behaviour—so lighting performs as intended throughout its service life.</p>
                 
                 <p>Each product is developed with attention to system compatibility, installation conditions, and real-world operating parameters. Documentation is structured to reduce ambiguity during design, coordination, and execution, allowing lighting decisions to be made with confidence.</p>
                 
+                <!-- 
+                    ACTION BUTTONS
+                    These are styled links that look like buttons.
+                    They navigate to other pages on the site.
+                -->
                 <div class="action-buttons">
                     <a href="specifications.html" class="action-btn">View Specifications</a>
                     <a href="products.html" class="action-btn">View Products</a>
@@ -70,52 +166,85 @@
         </div>
     </section>
 
-    <!-- Scripts -->
+    <!-- 
+        =========================================
+        JAVASCRIPT SECTION
+        =========================================
+        JavaScript makes the page interactive.
+        It runs AFTER the HTML loads.
+    -->
+    
+    <!-- External JS file for navigation toggle (shared across all pages) -->
     <script src="assets/js/main.js"></script>
+    
+    <!-- Page-specific JavaScript for this home page only -->
     <script>
-        // Page-specific scripts
+        // DOMContentLoaded = "run this code after the page finishes loading"
         document.addEventListener('DOMContentLoaded', () => {
-            // Scroll indicator click
+            
+            // ========================================
+            // SCROLL INDICATOR CLICK BEHAVIOR
+            // ========================================
+            // When you click the down arrow, it smoothly scrolls to the about section
+            
+            // Find the scroll indicator element
             const scrollIndicator = document.querySelector('.scroll-indicator');
+            
             if (scrollIndicator) {
+                // Add click event - when clicked, scroll to about section
                 scrollIndicator.addEventListener('click', () => {
                     document.querySelector('.about-section').scrollIntoView({
-                        behavior: 'smooth'
+                        behavior: 'smooth'  // Smooth animation instead of jumping
                     });
                 });
                 
-                // Fade out scroll indicator when scrolling down
+                // ========================================
+                // FADE OUT ARROW WHEN SCROLLING
+                // ========================================
+                // Hide the arrow when user starts scrolling down
+                
                 window.addEventListener('scroll', () => {
-                    if (window.scrollY > 10) {
-                        scrollIndicator.style.opacity = '0';
-                        scrollIndicator.style.pointerEvents = 'none';
+                    if (window.scrollY > 10) {  // If scrolled more than 10 pixels
+                        scrollIndicator.style.opacity = '0';           // Make invisible
+                        scrollIndicator.style.pointerEvents = 'none';  // Can't click it
                     } else {
-                        scrollIndicator.style.opacity = '1';
-                        scrollIndicator.style.pointerEvents = 'auto';
+                        scrollIndicator.style.opacity = '1';           // Make visible
+                        scrollIndicator.style.pointerEvents = 'auto';  // Can click it
                     }
                 });
             }
             
-            // Scroll-triggered fade-in animation for about section (reversible with debounce)
+            // ========================================
+            // ABOUT SECTION FADE-IN ANIMATION
+            // ========================================
+            // The about section fades in when you scroll to it
+            // and fades out when you scroll away
+            
             const aboutContent = document.querySelector('.about-content');
+            
             if (aboutContent) {
-                let debounceTimer;
+                let debounceTimer;  // Prevents animation from flickering
+                
+                // IntersectionObserver watches if an element is visible on screen
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
-                        // Debounce to prevent flickering on slow scroll
+                        // Debounce = wait a bit before acting (prevents jitter)
                         clearTimeout(debounceTimer);
                         debounceTimer = setTimeout(() => {
                             if (entry.isIntersecting) {
+                                // Element is visible - add "visible" class (triggers fade-in)
                                 entry.target.classList.add('visible');
                             } else {
+                                // Element is NOT visible - remove class (triggers fade-out)
                                 entry.target.classList.remove('visible');
                             }
-                        }, 100); // 100ms debounce
+                        }, 100); // Wait 100 milliseconds
                     });
                 }, {
-                    threshold: 0.2 // Trigger when 20% visible
+                    threshold: 0.2  // Trigger when 20% of element is visible
                 });
                 
+                // Start watching the about content
                 observer.observe(aboutContent);
             }
         });

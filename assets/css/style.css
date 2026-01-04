@@ -1,57 +1,109 @@
-/* Beton Design System */
+/* 
+    =============================================
+    BETON DESIGN SYSTEM - GLOBAL STYLESHEET
+    =============================================
+    This file controls the visual appearance of ALL pages.
+    
+    HOW TO READ CSS:
+    - selector { property: value; }
+    - selector = what element to style (e.g., body, .class-name, #id-name)
+    - property = what to change (e.g., color, font-size, padding)
+    - value = the new value (e.g., red, 16px, 20px)
+    
+    STRUCTURE OF THIS FILE:
+    1. CSS Variables (reusable values)
+    2. Reset & Base Styles
+    3. Layout Utilities
+    4. Typography
+    5. Buttons
+    6. Header & Navigation
+    7. Home Page Styles
+    8. Specifications Page Styles
+    9. Toast Notification
+    10. Responsive Styles (Mobile/Tablet)
+*/
 
+/* 
+    =========================================
+    CSS VARIABLES (:root)
+    =========================================
+    Variables start with -- and can be reused anywhere.
+    Example: var(--text-primary) = #1E1E1E
+    
+    Change these values to update colors across the entire site!
+*/
 :root {
-    /* Color System */
-    --bg-primary: #F7F7F5;
-    --text-primary: #1E1E1E;
-    --text-secondary: #555555;
-    --border-color: #E0E0E0;
+    /* COLOR SYSTEM - Main colors used throughout the site */
+    --bg-primary: #F7F7F5;      /* Light grey background */
+    --text-primary: #1E1E1E;    /* Dark text (almost black) */
+    --text-secondary: #555555;  /* Grey text for less important info */
+    --border-color: #E0E0E0;    /* Light grey borders */
     
-    /* Typography */
-    --font-family: 'Inter', sans-serif;
-    --body-size: 17px;
-    --line-height: 1.6;
+    /* TYPOGRAPHY - Font settings */
+    --font-family: 'Inter', sans-serif;  /* Main font (loaded from Google) */
+    --body-size: 17px;                    /* Default text size */
+    --line-height: 1.6;                   /* Space between lines of text */
     
-    /* Spacing */
-    --spacing-sm: 16px;
-    --spacing-md: 32px;
-    --spacing-lg: 64px;
-    --spacing-xl: 120px;
+    /* SPACING - Consistent gaps/padding used throughout */
+    --spacing-sm: 16px;   /* Small spacing */
+    --spacing-md: 32px;   /* Medium spacing */
+    --spacing-lg: 64px;   /* Large spacing */
+    --spacing-xl: 120px;  /* Extra large spacing */
     
-    /* Z-Index Scale (Standardized) */
-    --z-header: 1000;
-    --z-modal-backdrop: 2000;
-    --z-modal-content: 2001;
-    --z-toast: 3000;
+    /* Z-INDEX SCALE - Controls which elements appear "on top" 
+       Higher number = appears above lower numbers */
+    --z-header: 1000;         /* Header stays above content */
+    --z-modal-backdrop: 2000; /* Modal background above header */
+    --z-modal-content: 2001;  /* Modal content above backdrop */
+    --z-toast: 3000;          /* Toast notifications above everything */
 }
 
-/* Reset & Base */
+/* 
+    =========================================
+    CSS RESET & BASE STYLES
+    =========================================
+    These remove default browser styles for consistency.
+*/
+
+/* 
+    Universal selector (*) applies to ALL elements.
+    box-sizing: border-box makes padding/border included in width/height.
+*/
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+/* 
+    BODY - Base styles for the entire page.
+    All text and colors inherit from here unless overridden.
+*/
 body {
-    background-color: #e0e0e0; /* Premium Light Concrete Grey */
-    color: var(--text-primary);
-    font-family: var(--font-family);
-    font-size: var(--body-size);
-    line-height: var(--line-height);
-    -webkit-font-smoothing: antialiased;
-    padding-top: 100px; /* Prevent content from hiding behind fixed header */
+    background-color: #e0e0e0;           /* Light grey background */
+    color: var(--text-primary);          /* Dark text color */
+    font-family: var(--font-family);     /* Inter font */
+    font-size: var(--body-size);         /* 17px */
+    line-height: var(--line-height);     /* 1.6 (good readability) */
+    -webkit-font-smoothing: antialiased; /* Smoother fonts on Mac/iOS */
+    padding-top: 100px;                  /* Space for fixed header */
 }
 
+/* 
+    LINKS - Remove underlines, inherit parent color.
+    Hover effect fades the link slightly.
+*/
 a {
     text-decoration: none;
     color: inherit;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.2s ease;  /* Smooth fade animation */
 }
 
 a:hover {
-    opacity: 0.7;
+    opacity: 0.7;  /* 70% opacity on hover */
 }
 
+/* Remove bullet points from lists */
 ul {
     list-style: none;
 }

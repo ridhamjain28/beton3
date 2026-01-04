@@ -3,6 +3,16 @@
 - **[2026-01-03 Session]:** Mobile CSS updated to match mockup - White header (#FFFFFF) with black icons/text, Light grey content (#CCCCCC).
 - **Files Modified:** `assets/css/style.css` (mobile media query updated)
 - **Git Remote:** Changed to `https://github.com/ridhamjain28/beton3.git` - all future pushes go here.
+
+- **[2026-01-03 Session]:** Enhanced mobile and tablet responsiveness with new breakpoints.
+- **Files Modified:** 
+  - `assets/css/style.css` - Added tablet (769px-1024px) and small mobile (480px) breakpoints
+  - `products.html` - Fixed modal responsiveness for all screen sizes
+  - `support.html` - Enhanced contact form for mobile/small mobile
+- **Changes:**
+  - Tablet (1024px): 2-column grids, reduced typography, single-column modal
+  - Mobile (768px): Enhanced spacing, compact forms, map height adjustments
+  - Small Mobile (480px): Extra-tight padding, smaller logo, full-screen modal
 - **Next Step:** Await further user instructions.
 
 ## [2026-01-03] Comprehensive QA Audit Fixes

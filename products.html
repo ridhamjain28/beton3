@@ -1,31 +1,63 @@
 <!DOCTYPE html>
+<!-- 
+    =============================================
+    PRODUCTS.HTML - PRODUCT CATALOG PAGE
+    =============================================
+    This is the most complex page on the website.
+    It displays:
+    - A grid of product images (thumbnails)
+    - A modal (popup) with full product details when clicked
+    - Smooth animations using GSAP library
+    
+    KEY CONCEPTS:
+    - Product Grid: Shows all products as clickable cards
+    - Modal: Full-screen popup with product details
+    - FLIP Animation: Makes images smoothly "fly" between grid and modal
+    - GSAP: GreenSock Animation Platform (industry-standard animation library)
+-->
 <html lang="en">
 <head>
+    <!-- Standard meta tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products | Beton</title>
     <meta name="description" content="Premium ceiling lighting systems designed for consistent performance and visual comfort. Based in India, engineered for the world.">
     
-    <!-- Fonts: Inter -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
-    <!-- Styles -->
+    <!-- Main stylesheet -->
     <link rel="stylesheet" href="assets/css/style.css">
     
+    <!-- 
+        =========================================
+        PAGE-SPECIFIC STYLES
+        =========================================
+        These styles are ONLY used on this products page.
+        They control the product grid, modal, and animations.
+    -->
     <style>
-        /* Product Grid Styles */
+        /* 
+            ===========================================
+            PRODUCTS SECTION STYLES
+            ===========================================
+        */
+        
+        /* Main section wrapper */
         .products-section {
-            padding: 120px 0;
-            min-height: 80vh;
+            padding: 120px 0;      /* Vertical spacing */
+            min-height: 80vh;      /* At least 80% of screen height */
         }
         
+        /* Section header (title area) */
         .section-header {
             margin-bottom: 64px;
         }
         
         .section-header h2 {
+            /* clamp(min, preferred, max) = responsive font sizing */
             font-size: clamp(2rem, 4vw, 3rem);
             margin-bottom: 16px;
             color: #111111;
@@ -34,9 +66,14 @@
         .section-header p {
             font-size: clamp(1rem, 1.5vw, 1.125rem);
             color: #555555;
-            max-width: 65ch;
+            max-width: 65ch;  /* Optimal reading width (65 characters) */
         }
         
+        /* 
+            CCT BANNER
+            Black bar showing available color temperatures
+            CCT = Correlated Color Temperature (warm/cool light)
+        */
         .cct-banner {
             background: #1E1E1E;
             color: #FFFFFF;
@@ -54,36 +91,51 @@
             color: #FFFFFF;
         }
         
+        /* 
+            ===========================================
+            PRODUCT GRID
+            ===========================================
+            Uses CSS Grid to automatically arrange products.
+            auto-fill = creates as many columns as will fit
+            minmax(280px, 1fr) = each column is at least 280px
+        */
         .technical-grid {
             display: grid;
+            /* min(280px, 100%) prevents overflow on very small screens */
             grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
             gap: 32px;
             margin-top: 48px;
         }
         
+        /* 
+            PRODUCT CARD (Each item in the grid)
+            Shows product image with model number overlay
+        */
         .technical-item {
-            position: relative;
-            cursor: pointer;
+            position: relative;     /* For absolute positioning of model number */
+            cursor: pointer;        /* Hand cursor to show it's clickable */
             transition: transform 0.3s ease, opacity 0.3s ease;
-            /* Ensure smooth rendering */
+            /* backface-visibility prevents flickering during animations */
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
         }
         
+        /* Hover effect - lifts card slightly */
         .technical-item:hover {
             transform: translateY(-4px);
         }
         
+        /* Product image */
         .technical-item img {
             width: 100%;
             height: auto;
             display: block;
             border: 1px solid #E0E0E0;
-            /* Prevent flickering */
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
         }
         
+        /* Model number badge (bottom-left corner of image) */
         .model-number {
             position: absolute;
             bottom: 16px;
@@ -95,15 +147,29 @@
             color: #111111;
         }
         
-        /* Modal Styles */
+        /* 
+            ===========================================
+            MODAL STYLES
+            ===========================================
+            The modal is a full-screen popup that appears
+            when you click a product. It's hidden by default.
+        */
+        
+        /* 
+            MODAL BACKDROP
+            Dark overlay behind the modal content.
+            position: fixed = stays in place when scrolling
+            opacity: 0 = invisible by default
+            pointer-events: none = clicks pass through when invisible
+        */
         .expanded-view {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0);
-            z-index: 2000; /* Modal backdrop layer */
+            background: rgba(0, 0, 0, 0);  /* Transparent initially */
+            z-index: 2000;  /* Above everything else */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -112,11 +178,17 @@
             transition: opacity 0.3s ease;
         }
         
+        /* When modal is active (visible) */
         .expanded-view.active {
             opacity: 1;
-            pointer-events: all;
+            pointer-events: all;  /* Can now receive clicks */
         }
         
+        /* 
+            MODAL CONTENT BOX
+            White box containing image and details
+            Uses CSS Grid with 2 columns (image | details)
+        */
         .expanded-content {
             position: relative;
             width: 90%;
@@ -124,14 +196,17 @@
             max-height: 90vh;
             background: #FFFFFF;
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr;  /* Two equal columns */
             gap: 48px;
             padding: 48px;
             overflow: hidden;
-            /* Prevent content from disappearing during animation */
-            will-change: opacity;
+            will-change: opacity;  /* Optimizes animation performance */
         }
         
+        /* 
+            CLOSE BUTTON (×)
+            Positioned in top-right corner of modal
+        */
         .close-btn {
             position: absolute;
             top: 24px;
@@ -144,7 +219,7 @@
             line-height: 1;
             cursor: pointer;
             color: #000000;
-            z-index: 2001; /* Modal content layer */
+            z-index: 2001;  /* Above modal content */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -155,6 +230,10 @@
             opacity: 0.6;
         }
         
+        /* 
+            IMAGE CONTAINER (left side of modal)
+            Holds the product image
+        */
         .image-container {
             position: relative;
             width: 100%;
@@ -163,45 +242,52 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            /* Ensure images stay visible during transition */
             background: transparent;
         }
         
+        /* Images inside the modal */
         .image-container img,
         .expanded-img {
             max-width: 100%;
             max-height: 100%;
-            object-fit: contain;
-            /* Prevent image flickering */
+            object-fit: contain;  /* Maintains aspect ratio */
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
         }
         
+        /* 
+            PRODUCT DETAILS (right side of modal)
+            Contains title, price, description, specs, features
+        */
         .product-details {
             display: flex;
             flex-direction: column;
-            overflow-y: auto;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
+            overflow-y: auto;      /* Scrollable if content is too long */
+            scrollbar-width: none; /* Hides scrollbar (Firefox) */
+            -ms-overflow-style: none;  /* Hides scrollbar (IE/Edge) */
             color: #000000;
         }
         
+        /* Hides scrollbar (Chrome/Safari) */
         .product-details::-webkit-scrollbar {
             display: none;
         }
         
+        /* Product title */
         .product-details h3 {
             font-size: clamp(1.5rem, 2.5vw, 2rem);
             margin-bottom: 12px;
             color: #000000;
         }
         
+        /* Category label */
         .product-details .category {
             font-size: clamp(0.9rem, 1.2vw, 1rem);
             color: #555555;
             margin-bottom: 16px;
         }
         
+        /* Price - orange color to stand out */
         .product-details .price {
             font-size: clamp(1.25rem, 2vw, 1.5rem);
             font-weight: 600;
@@ -209,21 +295,24 @@
             margin-bottom: 24px;
         }
         
+        /* Description paragraph */
         .product-details p {
             font-size: clamp(0.95rem, 1.2vw, 1.05rem);
             line-height: 1.6;
             color: #000000;
             margin-bottom: 32px;
-            flex-shrink: 1;
+            flex-shrink: 1;  /* Can shrink if space is tight */
         }
         
+        /* Container for specs and features sections */
         .specs-features {
-            margin-top: auto;
+            margin-top: auto;  /* Pushes to bottom */
             display: flex;
             flex-direction: column;
             gap: 32px;
         }
         
+        /* Section headings (Specifications, Features) */
         .specs-section h4,
         .features-section h4 {
             font-size: clamp(1rem, 1.3vw, 1.125rem);
@@ -231,9 +320,10 @@
             color: #000000;
         }
         
+        /* Specifications table */
         .specs-table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: collapse;  /* Removes gaps between cells */
         }
         
         .specs-table tr {
@@ -246,15 +336,18 @@
             color: #000000;
         }
         
+        /* First column (spec name) - bold */
         .specs-table td:first-child {
             font-weight: 500;
             width: 40%;
         }
         
+        /* Second column (spec value) - grey */
         .specs-table td:last-child {
             color: #555555;
         }
         
+        /* Features list */
         .features-section ul {
             list-style: none;
         }
@@ -267,6 +360,7 @@
             color: #000000;
         }
         
+        /* Bullet point (custom) */
         .features-section li::before {
             content: "•";
             position: absolute;
@@ -274,17 +368,24 @@
             color: #000000;
         }
         
+        /* Details panel animation - starts invisible and offset */
         .details-panel {
             opacity: 0;
-            transform: translateX(20px);
-            /* Smooth transitions */
+            transform: translateX(20px);  /* Starts 20px to the right */
             will-change: opacity, transform;
         }
         
-        /* Mobile Responsive */
+        /* 
+            ===========================================
+            RESPONSIVE STYLES
+            ===========================================
+            Adjust layout for different screen sizes
+        */
+        
+        /* MOBILE: 768px and below */
         @media (max-width: 768px) {
             .expanded-content {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr;  /* Single column */
                 width: 95%;
                 max-height: 95vh;
                 padding: 24px;
@@ -297,11 +398,13 @@
             
             .technical-grid {
                 grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
-                gap: 24px;
             }
         }
         
-        /* Navigation Styles */
+        /* 
+            NAVIGATION STYLES
+            These override the global styles for this page
+        */
         .main-nav {
             display: flex;
         }
@@ -324,8 +427,9 @@
             color: #1E1E1E;
         }
         
+        /* Hamburger menu button */
         .nav-toggle {
-            display: none;
+            display: none;  /* Hidden on desktop */
             flex-direction: column;
             gap: 4px;
             background: none;
@@ -341,9 +445,10 @@
             transition: all 0.3s ease;
         }
         
+        /* Mobile navigation styles */
         @media (max-width: 768px) {
             .nav-toggle {
-                display: flex;
+                display: flex;  /* Show hamburger on mobile */
             }
             
             .main-nav {
@@ -353,35 +458,36 @@
                 width: 100%;
                 background: #FFFFFF;
                 border-top: 1px solid #E0E0E0;
-                max-height: 0;
+                max-height: 0;    /* Collapsed by default */
                 overflow: hidden;
                 transition: max-height 0.3s ease;
             }
             
+            /* When menu is open */
             .main-nav.active {
                 max-height: 500px;
             }
             
             .main-nav ul {
-                flex-direction: column;
+                flex-direction: column;  /* Stack links vertically */
                 padding: 24px;
                 gap: 16px;
             }
         }
         
-        /* TABLET: Modal single column */
+        /* TABLET: Modal becomes single column */
         @media (max-width: 1024px) {
             .expanded-content {
                 grid-template-columns: 1fr;
                 max-height: 95vh;
-                overflow-y: auto;
+                overflow-y: auto;  /* Scrollable */
                 padding: 32px;
                 gap: 24px;
             }
             
             .image-container {
                 min-height: 300px;
-                max-height: 50vh;
+                max-height: 50vh;  /* Limit image height on tablets */
             }
             
             .product-details {
@@ -394,7 +500,7 @@
             .expanded-content {
                 width: 100% !important;
                 max-width: 100%;
-                height: 100vh;
+                height: 100vh;      /* Full screen height */
                 max-height: 100vh;
                 padding: 20px !important;
                 border-radius: 0;
@@ -427,7 +533,7 @@
             }
         }
         
-        /* SMALL MOBILE: Extra compact modal */
+        /* SMALL MOBILE: Extra compact */
         @media (max-width: 480px) {
             .expanded-content {
                 padding: 16px !important;
@@ -469,7 +575,12 @@
 </head>
 <body>
 
-    <!-- Navigation -->
+    <!-- 
+        =========================================
+        NAVIGATION HEADER
+        =========================================
+        Same as other pages. PRODUCTS link has class="active".
+    -->
     <header class="site-header">
         <div class="container">
             <a href="index.html" class="brand-logo">
@@ -493,52 +604,87 @@
         </div>
     </header>
 
-    <!-- Products Section -->
+    <!-- 
+        =========================================
+        PRODUCTS SECTION
+        =========================================
+        Contains the product grid and section header.
+    -->
     <section class="products-section">
         <div class="container">
+            <!-- Section title and description -->
             <div class="section-header">
                 <h2>Product Systems</h2>
                 <p>A focused range of ceiling lighting systems designed for consistent performance, visual comfort, and clear specification.</p>
             </div>
             
-            <!-- CCT Banner -->
+            <!-- 
+                CCT BANNER
+                Shows that all products are available in different
+                color temperatures (3000K=warm to 6000K=cool)
+            -->
             <div class="cct-banner">
                 <p>All Systems Available in 3000K | 4000K | 5000K | 6000K CCT</p>
             </div>
             
+            <!-- 
+                PRODUCT GRID
+                id="technicalGrid" is used by JavaScript to inject products.
+                The actual product cards are created dynamically.
+            -->
             <div id="technicalGrid" class="technical-grid">
-                <!-- Products injected via JS -->
+                <!-- Products are injected here via JavaScript (see below) -->
             </div>
         </div>
     </section>
 
-    <!-- Expanded View Modal -->
+    <!-- 
+        =========================================
+        PRODUCT MODAL (Expanded View)
+        =========================================
+        This is the popup that appears when you click a product.
+        It's HIDDEN by default and shown via JavaScript.
+        
+        Structure:
+        - expanded-view: Dark backdrop (covers entire screen)
+          - expanded-content: White box with product details
+            - close-btn: X button to close
+            - image-container: Large product image
+            - product-details: Title, price, description, specs, features
+    -->
     <div id="expandedView" class="expanded-view">
         <div class="expanded-content">
+            <!-- Close button (×) -->
             <button id="closeBtn" class="close-btn" aria-label="Close">×</button>
             
+            <!-- Left side: Product image -->
             <div class="image-container">
+                <!-- This image is replaced by JavaScript with the clicked product's image -->
                 <img src="" alt="Product" class="flip-image" id="modalImage">
             </div>
             
+            <!-- Right side: Product details -->
             <div class="product-details details-panel">
+                <!-- These are populated by JavaScript when a product is clicked -->
                 <h3 id="expandedTitle"></h3>
                 <p id="expandedCategory" class="category"></p>
                 <p id="expandedPrice" class="price"></p>
                 <p id="expandedDesc"></p>
                 
                 <div class="specs-features">
+                    <!-- Specifications table -->
                     <div class="specs-section">
                         <h4>Specifications</h4>
                         <table id="specsTable" class="specs-table">
-                            <!-- Specs injected via JS -->
+                            <!-- Table rows are injected via JavaScript -->
                         </table>
                     </div>
                     
+                    <!-- Features list -->
                     <div class="features-section">
                         <h4>Features</h4>
                         <ul id="featuresList">
-                            <!-- Features injected via JS -->
+                            <!-- List items are injected via JavaScript -->
                         </ul>
                     </div>
             </div>
@@ -546,29 +692,56 @@
         </div>
     </div>
 
-    <!-- GSAP Libraries -->
+    <!-- 
+        =========================================
+        JAVASCRIPT LIBRARIES
+        =========================================
+        GSAP = GreenSock Animation Platform
+        - Industry-standard animation library
+        - Makes smooth, professional animations
+        
+        Flip Plugin = For "FLIP" animations
+        - FLIP = First, Last, Invert, Play
+        - Makes an element smoothly "fly" from one position to another
+    -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Flip.min.js"></script>
     
-    <!-- Product Data & Scripts -->
+    <!-- 
+        =========================================
+        PRODUCT DATA & SCRIPTS
+        =========================================
+    -->
     <script>
-        // Register GSAP Plugin
+        // Register the Flip plugin with GSAP
         gsap.registerPlugin(Flip);
         
-        // Store references for reparenting animation
-        let clickedThumbnail = null;
-        let activeImage = null;
-        let activeCard = null;
-        let isClosing = false;
+        // ============================================
+        // GLOBAL VARIABLES
+        // ============================================
+        // These track the currently selected product for animations
         
-        // Product Data - Ceiling Lights Only
+        let clickedThumbnail = null;  // The image that was clicked
+        let activeImage = null;       // The image currently in the modal
+        let activeCard = null;        // The card (container) that was clicked
+        let isClosing = false;        // Prevents double-click issues
+        
+        // ============================================
+        // PRODUCT DATA
+        // ============================================
+        // This is your product catalog!
+        // Each object represents one product with all its details.
+        // To add a new product, copy one of these objects and edit the values.
+        
         const products = [
             {
-                id: "SYS-01",
-                name: "Linear Suspension System",
-                category: "Ceiling Mounted",
-                price: "₹45,000",
+                id: "SYS-01",                         // Unique identifier / model number
+                name: "Linear Suspension System",     // Product name
+                category: "Ceiling Mounted",          // Type of product
+                price: "₹45,000",                     // Price (INR)
                 description: "Modular linear lighting system for general illumination in open-plan workspaces and dining areas.",
+                
+                // Technical specifications (shown in table)
                 specs: {
                     "Power": "40W LED",
                     "Lumens": "3200 lm",
@@ -579,6 +752,8 @@
                     "Material": "Extruded Aluminum",
                     "Warranty": "5 years"
                 },
+                
+                // Feature bullet points
                 features: [
                     "Modular aluminum extrusion with tool-free joining",
                     "Direct/Indirect light distribution options",
@@ -587,9 +762,11 @@
                     "Available in 600mm, 1200mm, 1800mm lengths",
                     "IP40 rated for indoor use"
                 ],
+                
+                // Image paths
                 images: {
                     off: "assets/product images/1 off.webp",
-                    on: "assets/product images/1 off.webp" // Using same for now, can be updated when on images are available
+                    on: "assets/product images/1 off.webp"
                 }
             },
             {
@@ -720,19 +897,29 @@
             }
         ];
         
-        // Function to render products
+        // ============================================
+        // RENDER PRODUCTS FUNCTION
+        // ============================================
+        // This creates the product grid HTML from the products array
+        
         function renderProducts() {
             const grid = document.getElementById('technicalGrid');
-            if (!grid) return;
+            if (!grid) return;  // Safety check
             
+            // Use .map() to transform each product into HTML
+            // .join('') combines all the HTML strings into one
             grid.innerHTML = products.map((product, index) => `
                 <div class="technical-item" data-id="${product.id}" data-flip-id="product-${index}">
-                    <img src="${product.images.off}" alt="${product.name}" data-flip-id="product-${index}" loading="lazy" decoding="async">
+                    <img src="${product.images.off}" 
+                         alt="${product.name}" 
+                         data-flip-id="product-${index}"
+                         loading="lazy"
+                         decoding="async">
                     <div class="model-number">${product.id}</div>
                 </div>
             `).join('');
             
-            // Add event listeners to technical items
+            // Add click event listeners to each product card
             document.querySelectorAll('.technical-item').forEach(item => {
                 item.addEventListener('click', function() {
                     const id = this.getAttribute('data-id');
@@ -742,17 +929,24 @@
             });
         }
         
-        // Function to open expanded view with GSAP Flip
+        // ============================================
+        // OPEN EXPANDED VIEW FUNCTION
+        // ============================================
+        // Called when a product is clicked.
+        // Creates a smooth "fly in" animation using GSAP Flip.
+        
         function openExpandedView(productId, clickedImage) {
+            // Find the product data by ID
             const product = products.find(p => p.id === productId);
             if (!product) return;
             
-            // Store references for reparenting
+            // Store references for the close animation later
             clickedThumbnail = clickedImage;
             activeImage = clickedImage;
             activeCard = clickedImage.closest('.technical-item');
             isClosing = false;
             
+            // Get DOM elements
             const expandedView = document.getElementById('expandedView');
             const modalImage = document.getElementById('modalImage');
             const expandedTitle = document.getElementById('expandedTitle');
@@ -764,16 +958,17 @@
             const detailsPanel = document.querySelector('.details-panel');
             const expandedContent = document.querySelector('.expanded-content');
 
-            // Capture the state of the clicked image for FLIP
+            // FLIP ANIMATION STEP 1: Capture starting position
+            // This records WHERE the image is before we move it
             const state = Flip.getState(clickedImage);
             
-            // Update content
+            // Populate the modal with product information
             expandedTitle.textContent = `${product.id} - ${product.name}`;
             expandedCategory.textContent = product.category;
             expandedPrice.textContent = product.price;
             expandedDesc.textContent = product.description;
             
-            // Populate specs table
+            // Build the specifications table
             specsTable.innerHTML = '';
             Object.entries(product.specs).forEach(([key, value]) => {
                 const row = document.createElement('tr');
@@ -784,7 +979,7 @@
                 specsTable.appendChild(row);
             });
             
-            // Populate features list
+            // Build the features list
             featuresList.innerHTML = '';
             product.features.forEach(feature => {
                 const li = document.createElement('li');
@@ -792,45 +987,48 @@
                 featuresList.appendChild(li);
             });
             
-            // Reparent the actual clicked image into the modal image container
+            // FLIP ANIMATION STEP 2: Move the image to the modal
+            // Instead of using a separate image, we MOVE the actual clicked image
             const imageContainer = document.querySelector('.image-container');
             if (imageContainer) {
-                // Clear any existing children (including modalImage)
+                // Clear the container
                 while (imageContainer.firstChild) {
                     imageContainer.removeChild(imageContainer.firstChild);
                 }
+                // Move the clicked image into the modal
                 imageContainer.appendChild(activeImage);
                 activeImage.classList.add('expanded-img');
                 activeImage.setAttribute('data-flip-id', clickedImage.getAttribute('data-flip-id'));
             }
             
-            // Ensure modal container is visible (in case it was hidden during close)
+            // Make sure modal is visible
             if (expandedContent) gsap.set(expandedContent, { autoAlpha: 1 });
             expandedView.style.pointerEvents = '';
             
-            // Immediately change DOM - show modal
+            // Show the modal
             expandedView.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden';  // Prevent page scrolling
             
-            // Fade in backdrop
+            // Animate the dark backdrop fading in
             gsap.to(expandedView, {
                 backgroundColor: 'rgba(0, 0, 0, 0.85)',
                 duration: 0.6,
                 ease: 'power3.inOut'
             });
             
-            // Execute FLIP animation on the reparented image
+            // FLIP ANIMATION STEP 3: Animate from old position to new position
+            // This creates the "flying" effect
             Flip.from(state, {
                 targets: activeImage,
                 duration: 0.6,
-                ease: 'power3.inOut',
+                ease: 'power3.inOut',  // Smooth acceleration/deceleration
                 absolute: true,
-                scale: true, // Smoother scale transitions
+                scale: true,
                 onComplete: () => {
-                    // Fade in text details after image lands
+                    // After image lands, fade in the text details
                     gsap.to(detailsPanel, {
-                        autoAlpha: 1,
-                        x: 0,
+                        autoAlpha: 1,  // Fade in
+                        x: 0,          // Slide from right to center
                         duration: 0.4,
                         ease: 'power2.out'
                     });
@@ -838,19 +1036,25 @@
             });
         }
         
-        // Function to close expanded view with reparenting FLIP
+        // ============================================
+        // CLOSE EXPANDED VIEW FUNCTION
+        // ============================================
+        // Called when close button is clicked, Escape is pressed, or backdrop is clicked.
+        // Animates the image back to its original position in the grid.
+        
         function closeExpandedView() {
             const expandedView = document.getElementById('expandedView');
             const detailsPanel = document.querySelector('.details-panel');
             const expandedContent = document.querySelector('.expanded-content');
 
+            // Prevent double-clicking from causing issues
             if (isClosing) return;
             isClosing = true;
 
-            // Kill any running animations to prevent race conditions
+            // Stop any running animations to prevent conflicts
             gsap.killTweensOf([expandedView, detailsPanel, activeImage, expandedContent]);
 
-            // If we don't know where to return, do a simple close
+            // If we don't have a reference to where the image came from, do a simple fade out
             if (!activeImage || !activeCard) {
                 gsap.to(expandedView, {
                     backgroundColor: 'rgba(0, 0, 0, 0)',
@@ -865,40 +1069,40 @@
                 return;
             }
 
-            // Keep modal visible during animation
+            // Keep modal visible during the animation
             expandedView.style.zIndex = '2000';
             gsap.set(expandedContent, { autoAlpha: 1 });
 
-            // 1) Fade out the text panel quickly
+            // Step 1: Fade out the text panel quickly
             gsap.to(detailsPanel, {
                 autoAlpha: 0,
-                x: 20,
+                x: 20,  // Slide right while fading
                 duration: 0.2,
                 ease: 'power2.in'
             });
 
-            // 2) Capture the state of the active image in expanded state
+            // Step 2: Capture current position of image (in modal)
             const state = Flip.getState(activeImage);
 
-            // 3) Move the image back into its original card slot (reparent)
+            // Step 3: Move the image back to its original card in the grid
             if (activeCard && activeImage) {
                 activeCard.insertBefore(activeImage, activeCard.firstChild);
                 activeImage.classList.remove('expanded-img');
             }
 
-            // 4) Ensure the card is visible for the animation target
+            // Step 4: Make sure the card is visible for the animation
             if (activeCard) {
                 gsap.set(activeCard, { autoAlpha: 1 });
             }
 
-            // 5) Animate backdrop fade-out
+            // Step 5: Fade out the dark backdrop
             gsap.to(expandedView, {
                 backgroundColor: 'rgba(0, 0, 0, 0)',
                 duration: 0.6,
                 ease: 'power3.inOut'
             });
 
-            // 6) Run FLIP animation back to grid slot
+            // Step 6: Animate image flying back to grid position
             Flip.from(state, {
                 targets: activeImage,
                 duration: 0.6,
@@ -906,13 +1110,15 @@
                 absolute: true,
                 scale: true,
                 onComplete: () => {
-                    // Cleanup + reset - IMPORTANT: delay this slightly to prevent white flash
+                    // Clean up after animation - delay slightly to prevent visual glitch
                     gsap.delayedCall(0.05, () => {
                         expandedView.classList.remove('active');
                         expandedView.style.pointerEvents = 'none';
                         expandedView.style.zIndex = '';
                         gsap.set(expandedContent, { autoAlpha: 1 });
-                        document.body.style.overflow = '';
+                        document.body.style.overflow = '';  // Re-enable page scrolling
+                        
+                        // Clear references
                         activeImage = null;
                         activeCard = null;
                         clickedThumbnail = null;
@@ -920,19 +1126,25 @@
                     });
                 },
                 onInterrupt: () => {
+                    // If animation is interrupted, reset the closing flag
                     isClosing = false;
                 }
             });
         }
         
-        // Initialize when DOM is loaded
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        // This runs when the page finishes loading
+        
         document.addEventListener('DOMContentLoaded', () => {
+            // Create the product grid
             renderProducts();
             
-            // Close button
+            // Close button click handler
             document.getElementById('closeBtn').addEventListener('click', closeExpandedView);
             
-            // Escape key
+            // Escape key handler (close modal with keyboard)
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
                     const expandedView = document.getElementById('expandedView');
@@ -942,8 +1154,9 @@
                 }
             });
             
-            // Overlay click
+            // Backdrop click handler (close when clicking outside the content)
             document.getElementById('expandedView').addEventListener('click', (e) => {
+                // Only close if the click was on the backdrop itself, not the content
                 if (e.target.id === 'expandedView') {
                     closeExpandedView();
                 }
@@ -952,7 +1165,7 @@
         });
     </script>
     
-    <!-- Global Scripts -->
+    <!-- Shared navigation script (handles hamburger menu) -->
     <script src="assets/js/main.js"></script>
 </body>
 </html>
