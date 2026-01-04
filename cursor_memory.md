@@ -13,6 +13,15 @@
   - Tablet (1024px): 2-column grids, reduced typography, single-column modal
   - Mobile (768px): Enhanced spacing, compact forms, map height adjustments
   - Small Mobile (480px): Extra-tight padding, smaller logo, full-screen modal
+
+- **[2026-01-04 Session]:** Added educational comments to all HTML and CSS files.
+- **Files Modified:** 
+  - `index.html` - Full documentation of home page structure
+  - `products.html` - Detailed comments on product grid, modal, and GSAP animations
+  - `specifications.html` - Explained spec grid layout and image handling
+  - `support.html` - Documented contact form, map, and toast notifications
+  - `assets/css/style.css` - Added header explaining CSS structure and variables
+- **Purpose:** Help user understand their website code for learning
 - **Next Step:** Await further user instructions.
 
 ## [2026-01-03] Comprehensive QA Audit Fixes
