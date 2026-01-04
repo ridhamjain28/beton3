@@ -22,6 +22,17 @@
   - `support.html` - Documented contact form, map, and toast notifications
   - `assets/css/style.css` - Added header explaining CSS structure and variables
 - **Purpose:** Help user understand their website code for learning
+
+- **[2026-01-05 Session]:** Website restructure - swapped home and products pages.
+- **Changes Made:**
+  - OLD `index.html` (immersive parallax) → NOW `why-beton.html`
+  - OLD `products.html` (product grid) → NOW `index.html` (new home page)
+- **Navigation Updated in ALL files:**
+  - HOME → `index.html` (Products Grid)
+  - WHY BETON? → `why-beton.html` (Immersive Brand Page)
+  - SPECIFICATIONS → `specifications.html`
+  - CONTACT → `support.html`
+- **CSS:** `body.home-page` class only on `why-beton.html` for immersive background
 - **Next Step:** Await further user instructions.
 
 ## [2026-01-03] Comprehensive QA Audit Fixes

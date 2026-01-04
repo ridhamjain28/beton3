@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--
+    =============================================
+    DECAP CMS ADMIN PANEL
+    =============================================
+    This page provides a user-friendly interface to manage products.
+    
+    ACCESS: yoursite.com/admin/
+    
+    SETUP REQUIREMENTS (Netlify):
+    1. Go to Netlify Dashboard > Site Settings > Identity
+    2. Click "Enable Identity"
+    3. Go to Services > Git Gateway > Enable Git Gateway
+    4. Go to Identity > Invite Users > Invite yourself
+    5. Check your email and set a password
+    
+    Then visit /admin/ and log in!
+-->
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Content Manager | Beton Admin</title>
+    
+    <!-- Netlify Identity Widget (for authentication) -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+    <!-- Decap CMS Script -->
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    
+    <!-- 
+        Custom Preview Template (Optional)
+        This makes the preview in the CMS look more like the actual site
+    -->
+    <script>
+        // Register a custom preview for products
+        CMS.registerPreviewStyle('/assets/css/style.css');
+        
+        // Custom preview component for product items
+        const ProductPreview = createClass({
+            render: function() {
+                const entry = this.props.entry;
+                const products = entry.getIn(['data', 'products']);
+                
+                if (!products || products.size === 0) {
+                    return h('div', {style: {padding: '20px'}}, 
+                        h('p', {}, 'No products added yet. Click "Add products" to start.')
+                    );
+                }
+                
+                return h('div', {style: {padding: '20px', fontFamily: 'Inter, sans-serif'}},
+                    h('h2', {style: {marginBottom: '20px'}}, 'Product Preview'),
+                    products.map((product, index) => {
+                        return h('div', {
+                            key: index,
+                            style: {
+                                border: '1px solid #E0E0E0',
+                                padding: '16px',
+                                marginBottom: '16px',
+                                borderRadius: '4px',
+                                background: '#fff'
+                            }
+                        },
+                            h('h3', {style: {margin: '0 0 8px 0'}}, 
+                                product.get('id') + ' - ' + (product.get('label') || 'Untitled')
+                            ),
+                            h('p', {style: {color: '#555', margin: '0 0 8px 0'}}, 
+                                product.get('type')
+                            ),
+                            h('p', {style: {color: '#FF4400', fontWeight: '600', margin: '0'}}, 
+                                '₹' + product.get('price')
+                            )
+                        );
+                    })
+                );
+            }
+        });
+        
+        CMS.registerPreviewTemplate('data', ProductPreview);
+    </script>
+</body>
+</html>
+

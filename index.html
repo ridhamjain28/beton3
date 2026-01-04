@@ -31,6 +31,9 @@
     <!-- Main stylesheet -->
     <link rel="stylesheet" href="assets/css/style.css">
     
+    <!-- Netlify Identity Widget (for Decap CMS authentication) -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    
     <!-- 
         =========================================
         PAGE-SPECIFIC STYLES
@@ -725,193 +728,57 @@
         let activeImage = null;       // The image currently in the modal
         let activeCard = null;        // The card (container) that was clicked
         let isClosing = false;        // Prevents double-click issues
+        let products = [];            // Product data loaded from JSON
         
         // ============================================
-        // PRODUCT DATA
+        // LOAD PRODUCT DATA FROM JSON
         // ============================================
-        // This is your product catalog!
-        // Each object represents one product with all its details.
-        // To add a new product, copy one of these objects and edit the values.
+        // Products are now stored in assets/data.json and managed via Decap CMS.
+        // This function fetches the data asynchronously.
         
-        const products = [
-            {
-                id: "SYS-01",                         // Unique identifier / model number
-                name: "Linear Suspension System",     // Product name
-                category: "Ceiling Mounted",          // Type of product
-                price: "₹45,000",                     // Price (INR)
-                description: "Modular linear lighting system for general illumination in open-plan workspaces and dining areas.",
-                
-                // Technical specifications (shown in table)
-                specs: {
-                    "Power": "40W LED",
-                    "Lumens": "3200 lm",
-                    "CRI": "> 90",
-                    "UGR": "< 19",
-                    "Lifetime": "50,000 hours",
-                    "Dimensions": "1200mm × 40mm × 60mm",
-                    "Material": "Extruded Aluminum",
-                    "Warranty": "5 years"
-                },
-                
-                // Feature bullet points
-                features: [
-                    "Modular aluminum extrusion with tool-free joining",
-                    "Direct/Indirect light distribution options",
-                    "Integrated DALI dimming drivers",
-                    "Hot-swappable LED modules for easy maintenance",
-                    "Available in 600mm, 1200mm, 1800mm lengths",
-                    "IP40 rated for indoor use"
-                ],
-                
-                // Image paths
-                images: {
-                    off: "assets/product images/1 off.webp",
-                    on: "assets/product images/1 off.webp"
+        async function loadProducts() {
+            try {
+                const response = await fetch('assets/data.json');
+                if (!response.ok) {
+                    throw new Error('Failed to load product data');
                 }
-            },
-            {
-                id: "RENDER-1",
-                name: "System 01",
-                category: "Ceiling Suspension",
-                price: "₹38,000",
-                description: "General illumination for open-plan workspaces and dining areas.",
-                specs: {
-                    "Power": "35W LED",
-                    "Lumens": "2800 lm",
-                    "CRI": "> 90",
-                    "UGR": "< 19",
-                    "Lifetime": "50,000 hours",
-                    "Dimensions": "1200mm × 40mm × 60mm",
-                    "Material": "Extruded Aluminum",
-                    "Warranty": "5 years"
-                },
-                features: [
-                    "Modular aluminum extrusion",
-                    "Direct/Indirect distribution",
-                    "Integrated DALI drivers",
-                    "Tool-free joining mechanism"
-                ],
-                images: {
-                    off: "assets/product images/RENDER-1 P.webp",
-                    on: "assets/product images/RENDER-1 P.webp"
+                const data = await response.json();
+                products = data.products || [];
+                console.log(`Loaded ${products.length} products from JSON`);
+                return products;
+            } catch (error) {
+                console.error('Error loading products:', error);
+                // Fallback: show error message in grid
+                const grid = document.getElementById('technicalGrid');
+                if (grid) {
+                    grid.innerHTML = '<p style="text-align: center; color: #555; padding: 40px;">Unable to load products. Please refresh the page.</p>';
                 }
-            },
-            {
-                id: "RENDER-2",
-                name: "System 02",
-                category: "Ceiling Mount",
-                price: "₹42,000",
-                description: "Architectural ceiling lighting for corridors, amenities, and secondary spaces.",
-                specs: {
-                    "Power": "30W LED",
-                    "Lumens": "2400 lm",
-                    "CRI": "> 85",
-                    "IP Rating": "IP54",
-                    "Lifetime": "50,000 hours",
-                    "Warranty": "5 years"
-                },
-                features: [
-                    "IP54 rated enclosure",
-                    "Impact resistant housing",
-                    "Hidden tamper-proof fixings",
-                    "Emergency battery backup option"
-                ],
-                images: {
-                    off: "assets/product images/RENDER-2 P-3.webp",
-                    on: "assets/product images/RENDER-2 P-3.webp"
-                }
-            },
-            {
-                id: "RENDER-4",
-                name: "System 04",
-                category: "Ceiling Suspension",
-                price: "₹40,000",
-                description: "Linear suspension system for modern office environments.",
-                specs: {
-                    "Power": "32W LED",
-                    "Lumens": "2600 lm",
-                    "CRI": "> 90",
-                    "UGR": "< 19",
-                    "Lifetime": "50,000 hours",
-                    "Warranty": "5 years"
-                },
-                features: [
-                    "Modular design",
-                    "Tool-free assembly",
-                    "Integrated dimming",
-                    "Thermal management"
-                ],
-                images: {
-                    off: "assets/product images/RENDER-4 P-2.webp",
-                    on: "assets/product images/RENDER-4 P-2.webp"
-                }
-            },
-            {
-                id: "RENDER-1-P1",
-                name: "System 01 Variant",
-                category: "Ceiling Mount",
-                price: "₹35,000",
-                description: "Compact ceiling lighting solution for focused illumination.",
-                specs: {
-                    "Power": "25W LED",
-                    "Lumens": "2000 lm",
-                    "CRI": "> 90",
-                    "Lifetime": "50,000 hours",
-                    "Warranty": "5 years"
-                },
-                features: [
-                    "Compact design",
-                    "High CRI LED",
-                    "Easy installation",
-                    "Energy efficient"
-                ],
-                images: {
-                    off: "assets/product images/RENDER-1 P-1.webp",
-                    on: "assets/product images/RENDER-1 P-1.webp"
-                }
-            },
-            {
-                id: "RENDER-1-P5",
-                name: "System 01 Extended",
-                category: "Ceiling Suspension",
-                price: "₹48,000",
-                description: "Extended linear system for large open spaces.",
-                specs: {
-                    "Power": "45W LED",
-                    "Lumens": "3600 lm",
-                    "CRI": "> 90",
-                    "UGR": "< 19",
-                    "Lifetime": "50,000 hours",
-                    "Warranty": "5 years"
-                },
-                features: [
-                    "Extended length options",
-                    "High lumen output",
-                    "Modular connectivity",
-                    "Professional grade"
-                ],
-                images: {
-                    off: "assets/product images/RENDER-1 P-5.webp",
-                    on: "assets/product images/RENDER-1 P-5.webp"
-                }
+                return [];
             }
-        ];
+        }
         
         // ============================================
         // RENDER PRODUCTS FUNCTION
         // ============================================
         // This creates the product grid HTML from the products array
+        // Data now comes from assets/data.json (managed via Decap CMS)
         
         function renderProducts() {
             const grid = document.getElementById('technicalGrid');
             if (!grid) return;  // Safety check
             
+            if (products.length === 0) {
+                grid.innerHTML = '<p style="text-align: center; color: #555; padding: 40px;">No products available.</p>';
+                return;
+            }
+            
             // Use .map() to transform each product into HTML
             // .join('') combines all the HTML strings into one
+            // Note: New JSON structure uses 'image' instead of 'images.off'
             grid.innerHTML = products.map((product, index) => `
                 <div class="technical-item" data-id="${product.id}" data-flip-id="product-${index}">
-                    <img src="${product.images.off}" 
-                         alt="${product.name}" 
+                    <img src="${product.image}" 
+                         alt="${product.label || product.id}" 
                          data-flip-id="product-${index}"
                          loading="lazy"
                          decoding="async">
@@ -934,6 +801,7 @@
         // ============================================
         // Called when a product is clicked.
         // Creates a smooth "fly in" animation using GSAP Flip.
+        // Updated to work with Decap CMS JSON structure.
         
         function openExpandedView(productId, clickedImage) {
             // Find the product data by ID
@@ -963,29 +831,49 @@
             const state = Flip.getState(clickedImage);
             
             // Populate the modal with product information
-            expandedTitle.textContent = `${product.id} - ${product.name}`;
-            expandedCategory.textContent = product.category;
-            expandedPrice.textContent = product.price;
-            expandedDesc.textContent = product.description;
+            // New JSON structure: 'label' instead of 'name', 'type' instead of 'category'
+            expandedTitle.textContent = product.label || `${product.id}`;
+            expandedCategory.textContent = product.type || 'Ceiling Light';
+            expandedPrice.textContent = `₹${product.price}`;
+            expandedDesc.textContent = product.description || '';
             
-            // Build the specifications table
+            // Build the specifications table from the new specs object structure
+            // New format: specs.power, specs.lumens, specs.cri, etc.
             specsTable.innerHTML = '';
-            Object.entries(product.specs).forEach(([key, value]) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${key}</td>
-                    <td>${value}</td>
-                `;
-                specsTable.appendChild(row);
-            });
+            if (product.specs) {
+                const specMapping = {
+                    'power': 'Power',
+                    'lumens': 'Lumens',
+                    'cri': 'CRI',
+                    'ugr': 'UGR',
+                    'lifetime': 'Lifetime',
+                    'dimensions': 'Dimensions',
+                    'material': 'Material',
+                    'warranty': 'Warranty'
+                };
+                
+                Object.entries(specMapping).forEach(([key, label]) => {
+                    const value = product.specs[key];
+                    if (value && value !== 'N/A') {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${label}</td>
+                            <td>${value}</td>
+                        `;
+                        specsTable.appendChild(row);
+                    }
+                });
+            }
             
             // Build the features list
             featuresList.innerHTML = '';
-            product.features.forEach(feature => {
-                const li = document.createElement('li');
-                li.textContent = feature;
-                featuresList.appendChild(li);
-            });
+            if (product.features && Array.isArray(product.features)) {
+                product.features.forEach(feature => {
+                    const li = document.createElement('li');
+                    li.textContent = feature;
+                    featuresList.appendChild(li);
+                });
+            }
             
             // FLIP ANIMATION STEP 2: Move the image to the modal
             // Instead of using a separate image, we MOVE the actual clicked image
@@ -1136,8 +1024,12 @@
         // INITIALIZATION
         // ============================================
         // This runs when the page finishes loading
+        // Now loads products from JSON before rendering
         
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Load products from JSON file (managed by Decap CMS)
+            await loadProducts();
+            
             // Create the product grid
             renderProducts();
             
@@ -1167,5 +1059,18 @@
     
     <!-- Shared navigation script (handles hamburger menu) -->
     <script src="assets/js/main.js"></script>
+    
+    <!-- Netlify Identity Redirect (for Decap CMS login) -->
+    <script>
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        document.location.href = "/admin/";
+                    });
+                }
+            });
+        }
+    </script>
 </body>
 </html>

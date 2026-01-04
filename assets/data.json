@@ -1,0 +1,157 @@
+{
+  "products": [
+    {
+      "id": "SYS-01",
+      "label": "SYS-01 - Linear Suspension System",
+      "type": "Ceiling Mounted",
+      "price": "45,000",
+      "description": "Modular linear lighting system for general illumination in open-plan workspaces and dining areas.",
+      "image": "assets/product images/1 off.webp",
+      "specs": {
+        "power": "40W LED",
+        "lumens": "3200 lm",
+        "cri": "> 90",
+        "ugr": "< 19",
+        "lifetime": "50,000 hours",
+        "dimensions": "1200mm × 40mm × 60mm",
+        "material": "Extruded Aluminum",
+        "warranty": "5 years"
+      },
+      "features": [
+        "Modular aluminum extrusion with tool-free joining",
+        "Direct/Indirect light distribution options",
+        "Integrated DALI dimming drivers",
+        "Hot-swappable LED modules for easy maintenance",
+        "Available in 600mm, 1200mm, 1800mm lengths",
+        "IP40 rated for indoor use"
+      ],
+      "cct": ["3000K", "4000K", "5000K", "6000K"]
+    },
+    {
+      "id": "RENDER-1",
+      "label": "RENDER-1 - System 01",
+      "type": "Ceiling Suspension",
+      "price": "38,000",
+      "description": "General illumination for open-plan workspaces and dining areas.",
+      "image": "assets/product images/RENDER-1 P.webp",
+      "specs": {
+        "power": "35W LED",
+        "lumens": "2800 lm",
+        "cri": "> 90",
+        "ugr": "< 19",
+        "lifetime": "50,000 hours",
+        "dimensions": "1200mm × 40mm × 60mm",
+        "material": "Extruded Aluminum",
+        "warranty": "5 years"
+      },
+      "features": [
+        "Modular aluminum extrusion",
+        "Direct/Indirect distribution",
+        "Integrated DALI drivers",
+        "Tool-free joining mechanism"
+      ],
+      "cct": ["3000K", "4000K", "5000K", "6000K"]
+    },
+    {
+      "id": "RENDER-2",
+      "label": "RENDER-2 - System 02",
+      "type": "Ceiling Mount",
+      "price": "42,000",
+      "description": "Architectural ceiling lighting for corridors, amenities, and secondary spaces.",
+      "image": "assets/product images/RENDER-2 P-3.webp",
+      "specs": {
+        "power": "30W LED",
+        "lumens": "2400 lm",
+        "cri": "> 85",
+        "ugr": "N/A",
+        "lifetime": "50,000 hours",
+        "dimensions": "N/A",
+        "material": "Impact Resistant Housing",
+        "warranty": "5 years"
+      },
+      "features": [
+        "IP54 rated enclosure",
+        "Impact resistant housing",
+        "Hidden tamper-proof fixings",
+        "Emergency battery backup option"
+      ],
+      "cct": ["3000K", "4000K", "5000K", "6000K"]
+    },
+    {
+      "id": "RENDER-4",
+      "label": "RENDER-4 - System 04",
+      "type": "Ceiling Suspension",
+      "price": "40,000",
+      "description": "Linear suspension system for modern office environments.",
+      "image": "assets/product images/RENDER-4 P-2.webp",
+      "specs": {
+        "power": "32W LED",
+        "lumens": "2600 lm",
+        "cri": "> 90",
+        "ugr": "< 19",
+        "lifetime": "50,000 hours",
+        "dimensions": "N/A",
+        "material": "Extruded Aluminum",
+        "warranty": "5 years"
+      },
+      "features": [
+        "Modular design",
+        "Tool-free assembly",
+        "Integrated dimming",
+        "Thermal management"
+      ],
+      "cct": ["3000K", "4000K", "5000K", "6000K"]
+    },
+    {
+      "id": "RENDER-1-P1",
+      "label": "RENDER-1-P1 - System 01 Variant",
+      "type": "Ceiling Mount",
+      "price": "35,000",
+      "description": "Compact ceiling lighting solution for focused illumination.",
+      "image": "assets/product images/RENDER-1 P-1.webp",
+      "specs": {
+        "power": "25W LED",
+        "lumens": "2000 lm",
+        "cri": "> 90",
+        "ugr": "N/A",
+        "lifetime": "50,000 hours",
+        "dimensions": "N/A",
+        "material": "Aluminum",
+        "warranty": "5 years"
+      },
+      "features": [
+        "Compact design",
+        "High CRI LED",
+        "Easy installation",
+        "Energy efficient"
+      ],
+      "cct": ["3000K", "4000K", "5000K", "6000K"]
+    },
+    {
+      "id": "RENDER-1-P5",
+      "label": "RENDER-1-P5 - System 01 Extended",
+      "type": "Ceiling Suspension",
+      "price": "48,000",
+      "description": "Extended linear system for large open spaces.",
+      "image": "assets/product images/RENDER-1 P-5.webp",
+      "specs": {
+        "power": "45W LED",
+        "lumens": "3600 lm",
+        "cri": "> 90",
+        "ugr": "< 19",
+        "lifetime": "50,000 hours",
+        "dimensions": "N/A",
+        "material": "Extruded Aluminum",
+        "warranty": "5 years"
+      },
+      "features": [
+        "Extended length options",
+        "High lumen output",
+        "Modular connectivity",
+        "Professional grade"
+      ],
+      "cct": ["3000K", "4000K", "5000K", "6000K"]
+    }
+  ]
+}
+

@@ -1,0 +1,157 @@
+# =============================================
+# DECAP CMS CONFIGURATION
+# =============================================
+# This file configures the admin panel for managing products.
+# Access the admin panel at: yoursite.com/admin/
+#
+# SETUP REQUIREMENTS:
+# 1. Enable Netlify Identity on your Netlify site
+# 2. Enable Git Gateway in Netlify Identity settings
+# 3. Invite yourself as a user via Netlify Identity
+
+backend:
+  name: git-gateway
+  branch: main
+
+# Where uploaded images will be stored
+media_folder: "assets/images"
+public_folder: "assets/images"
+
+# =============================================
+# COLLECTIONS (Content Types)
+# =============================================
+collections:
+  - name: "products"
+    label: "Products"
+    description: "Manage the product catalog displayed on the website"
+    files:
+      - name: "data"
+        label: "Product Data"
+        file: "assets/data.json"
+        description: "Edit the products list - each product will appear in the product grid"
+        fields:
+          - name: "products"
+            label: "Product List"
+            widget: "list"
+            summary: "{{fields.id}} - {{fields.label}}"
+            fields:
+              # Basic Product Information
+              - label: "Product ID"
+                name: "id"
+                widget: "string"
+                hint: "Unique identifier (e.g., SYS-01, RENDER-1)"
+                default: "SYS-01"
+                
+              - label: "Product Label"
+                name: "label"
+                widget: "string"
+                hint: "Full name shown in modal (e.g., RENDER-1 - System 01)"
+                default: "RENDER-1 - System 01"
+                
+              - label: "Category/Type"
+                name: "type"
+                widget: "select"
+                options:
+                  - "Ceiling Suspension"
+                  - "Ceiling Mount"
+                  - "Ceiling Mounted"
+                  - "Surface Mount"
+                  - "Recessed"
+                default: "Ceiling Suspension"
+                
+              - label: "Price (₹)"
+                name: "price"
+                widget: "string"
+                hint: "Price without ₹ symbol (e.g., 38,000)"
+                default: "38,000"
+                
+              - label: "Short Description"
+                name: "description"
+                widget: "text"
+                hint: "Brief product description for the modal"
+                
+              - label: "Product Image"
+                name: "image"
+                widget: "image"
+                hint: "Main product image (.webp preferred)"
+                media_folder: "/assets/product images"
+                public_folder: "assets/product images"
+
+              # Technical Specifications
+              - label: "Specifications"
+                name: "specs"
+                widget: "object"
+                collapsed: true
+                fields:
+                  - label: "Power"
+                    name: "power"
+                    widget: "string"
+                    default: "35W LED"
+                    hint: "e.g., 35W LED"
+                    
+                  - label: "Lumens"
+                    name: "lumens"
+                    widget: "string"
+                    default: "2800 lm"
+                    hint: "e.g., 2800 lm"
+                    
+                  - label: "CRI"
+                    name: "cri"
+                    widget: "string"
+                    default: "> 90"
+                    hint: "Color Rendering Index (e.g., > 90)"
+                    
+                  - label: "UGR"
+                    name: "ugr"
+                    widget: "string"
+                    default: "< 19"
+                    hint: "Unified Glare Rating (e.g., < 19, or N/A)"
+                    
+                  - label: "Lifetime"
+                    name: "lifetime"
+                    widget: "string"
+                    default: "50,000 hours"
+                    hint: "Expected lifetime in hours"
+                    
+                  - label: "Dimensions"
+                    name: "dimensions"
+                    widget: "string"
+                    default: "1200mm × 40mm × 60mm"
+                    hint: "L × W × H (or N/A if not applicable)"
+                    
+                  - label: "Material"
+                    name: "material"
+                    widget: "string"
+                    default: "Extruded Aluminum"
+                    hint: "Primary construction material"
+                    
+                  - label: "Warranty"
+                    name: "warranty"
+                    widget: "string"
+                    default: "5 years"
+                    hint: "Warranty period"
+
+              # Features List
+              - label: "Features List"
+                name: "features"
+                widget: "list"
+                hint: "Add bullet points that appear in the product modal"
+                default:
+                  - "Modular aluminum extrusion"
+                  - "Direct/Indirect distribution"
+
+              # CCT Options
+              - label: "Available CCT Options"
+                name: "cct"
+                widget: "select"
+                multiple: true
+                options:
+                  - "3000K"
+                  - "4000K"
+                  - "5000K"
+                  - "6000K"
+                default:
+                  - "3000K"
+                  - "4000K"
+                hint: "Color temperature options available"
+
