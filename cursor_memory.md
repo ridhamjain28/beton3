@@ -51,6 +51,15 @@
   2. Enable Git Gateway in Identity settings
   3. Invite user via Identity
   4. Access admin at /admin/
+
+- **[2026-01-05 Session]:** Fixed Netlify Identity verification error.
+- **Issue:** Email verification link redirected to pages missing the Identity widget
+- **Fix:** Added `netlify-identity-widget.js` to ALL HTML pages:
+  - `index.html` ✅ (already had it)
+  - `why-beton.html` ✅ (added)
+  - `specifications.html` ✅ (added)
+  - `support.html` ✅ (added)
+- **Also Added:** Login redirect script to all pages (redirects to /admin/ after login)
 - **Next Step:** Await further user instructions.
 
 ## [2026-01-03] Comprehensive QA Audit Fixes
@@ -255,4 +264,50 @@
      - Added `backface-visibility: hidden` to `.image-container img`, `.expanded-img`, `.technical-item`, and `.technical-item img` to prevent flickering
      - Added `will-change: opacity, transform` to `.details-panel`
 - **Next Step:** Test modal open/close animation to confirm white flash is eliminated.
+
+---
+
+## Current Feature Map (Added 2026-01-05)
+
+### 1. Core Pages and Navigation
+| Page | File | Purpose |
+|------|------|---------|
+| Home (Products) | `index.html` | Product grid landing page with GSAP modal |
+| Why Beton? | `why-beton.html` | Immersive parallax brand page (`home.png`) |
+| Specifications | `specifications.html` | Technical lighting concepts with diagrams |
+| Contact | `support.html` | Contact form + Leaflet map |
+| CMS Admin | `admin/index.html` | Decap CMS entry point |
+
+### 2. External Libraries (CDN)
+| Library | Version | Purpose |
+|---------|---------|---------|
+| GSAP | 3.12.2 | Animation engine |
+| GSAP Flip | 3.12.2 | Modal FLIP transitions |
+| Leaflet | 1.9.4 | Interactive map (support.html) |
+| Netlify Identity | v1 | CMS authentication |
+| Google Fonts | Inter | Typography |
+
+### 3. Data Architecture
+- **`assets/data.json`** - Single source of truth for products (managed by Decap CMS)
+- **Inline JS in `index.html`** - Fetches JSON via `fetch()` API, renders grid + modal
+- **`admin/config.yml`** - CMS schema (id, label, type, price, specs, features, cct)
+
+### 4. CSS Architecture (`assets/css/style.css`)
+- **CSS Variables** - Design tokens in `:root` (colors, spacing, z-index scale)
+- **Z-Index Scale** - `--z-header: 1000`, `--z-modal-backdrop: 2000`, `--z-toast: 3000`
+- **Fixed Header** - `position: fixed` with `:target::before` scroll-anchor offset
+- **Responsive Breakpoints** - 480px (small mobile), 768px (mobile), 1024px (tablet)
+- **Mobile Theme** - White header (#FFFFFF), Light grey body (#CCCCCC)
+- **Home Page** - `body.home-page` class triggers parallax background
+
+### 5. Key JavaScript Features
+- **Async Data Loading** - `loadProducts()` fetches from `assets/data.json`
+- **GSAP Flip Animation** - Image reparenting from grid to modal
+- **IntersectionObserver** - Scroll-triggered fade for about section (debounced 100ms)
+- **Error Handling** - Try-catch on map init, fallback UI on data load failure
+
+### 6. Form and Backend
+- **Web3Forms** - Contact form backend (`support.html`)
+- **Toast Notifications** - Success/error feedback with 15s auto-hide
+- **Phone Validation** - Pattern `[0-9+\s\-()]+` for input validation
 

@@ -1,3 +1,10 @@
+# MEMORY & CONTEXT RULES
+1. **READ MEMORY FIRST:** Before starting any task, scan `cursor_memory.md` to understand the active file structure and feature set.
+2. **Update on Change:** If you add a new feature or change a file's logic, update `cursor_memory.md` immediately.
+3. **Save Tokens:** Use the memory file for context instead of re-reading every file.
+
+---
+
 # CURSOR SYSTEM INSTRUCTIONS
 
 You are an expert AI pair programmer. You must strictly adhere to the following workflow to maintain context across sessions.
