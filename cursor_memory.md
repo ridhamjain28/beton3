@@ -33,6 +33,24 @@
   - SPECIFICATIONS → `specifications.html`
   - CONTACT → `support.html`
 - **CSS:** `body.home-page` class only on `why-beton.html` for immersive background
+
+- **[2026-01-05 Session]:** Implemented Decap CMS for product management.
+- **Files Created:**
+  - `assets/data.json` - Product data in CMS-compatible JSON format
+  - `admin/config.yml` - Decap CMS configuration with full product schema
+  - `admin/index.html` - CMS admin panel entry point
+- **Files Modified:**
+  - `index.html` - Now fetches products from JSON, added Netlify Identity widget
+- **CMS Schema Fields:**
+  - Basic: id, label, type, price, description, image
+  - Specs: power, lumens, cri, ugr, lifetime, dimensions, material, warranty
+  - Features: list of bullet points
+  - CCT: multi-select (3000K, 4000K, 5000K, 6000K)
+- **Setup Required:**
+  1. Enable Netlify Identity on site
+  2. Enable Git Gateway in Identity settings
+  3. Invite user via Identity
+  4. Access admin at /admin/
 - **Next Step:** Await further user instructions.
 
 ## [2026-01-03] Comprehensive QA Audit Fixes
